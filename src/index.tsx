@@ -1,0 +1,790 @@
+import { Hono } from 'hono'
+import { cors } from 'hono/cors'
+
+type Bindings = {
+  DB: D1Database
+}
+
+const app = new Hono<{ Bindings: Bindings }>()
+
+// Enable CORS for API routes
+app.use('/api/*', cors())
+
+// ============================================
+// API Routes
+// ============================================
+
+// Submit inquiry
+app.post('/api/inquiries', async (c) => {
+  const { env } = c
+  
+  try {
+    const body = await c.req.json()
+    const { name, email, grade, message } = body
+    
+    // Validation
+    if (!name || !email || !grade) {
+      return c.json({ success: false, error: '必須項目を入力してください' }, 400)
+    }
+    
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return c.json({ success: false, error: 'メールアドレスの形式が正しくありません' }, 400)
+    }
+    
+    // Insert into database
+    const result = await env.DB.prepare(`
+      INSERT INTO inquiries (name, email, grade, message) VALUES (?, ?, ?, ?)
+    `).bind(name, email, grade, message || '').run()
+    
+    return c.json({ 
+      success: true, 
+      message: 'お問い合わせを受け付けました。担当者より折り返しご連絡いたします。',
+      id: result.meta.last_row_id 
+    })
+  } catch (error) {
+    console.error('Error creating inquiry:', error)
+    return c.json({ success: false, error: 'エラーが発生しました。しばらく経ってからお試しください。' }, 500)
+  }
+})
+
+// Get all inquiries (admin endpoint)
+app.get('/api/inquiries', async (c) => {
+  const { env } = c
+  
+  try {
+    const result = await env.DB.prepare(`
+      SELECT * FROM inquiries ORDER BY created_at DESC
+    `).all()
+    
+    return c.json({ success: true, data: result.results })
+  } catch (error) {
+    console.error('Error fetching inquiries:', error)
+    return c.json({ success: false, error: 'データの取得に失敗しました' }, 500)
+  }
+})
+
+// Health check
+app.get('/api/health', (c) => {
+  return c.json({ status: 'ok', timestamp: new Date().toISOString() })
+})
+
+// ============================================
+// Main Page
+// ============================================
+
+app.get('/', (c) => {
+  const html = `<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Think Do! | 筑波大医学類生による学習コーチング</title>
+  <meta name="description" content="筑波大医学類生による受験コーチング。自考力を養成し、合格への最短ルートを導きます。">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up { animation: fade-in-up 0.6s ease-out; }
+    @keyframes fade-in-down {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-down { animation: fade-in-down 0.3s ease-out; }
+    .font-handwriting { font-family: 'Brush Script MT', cursive; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="font-sans text-gray-800 bg-gray-50 min-h-screen">
+  
+  <!-- Navigation -->
+  <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-5">
+    <div class="container mx-auto px-6 flex justify-between items-center">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <div id="nav-logo" class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl bg-white text-indigo-900">
+          TD
+        </div>
+        <span id="nav-title" class="text-xl font-bold tracking-tight text-white">
+          Think Do!
+        </span>
+      </div>
+
+      <div class="hidden md:flex items-center space-x-8">
+        <button onclick="scrollToSection('concept')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">コンセプト</button>
+        <button onclick="scrollToSection('management')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">マネジメント</button>
+        <button onclick="scrollToSection('features')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">特徴</button>
+        <button onclick="scrollToSection('story')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">ストーリー</button>
+        <button onclick="scrollToSection('pricing')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">料金</button>
+        <button onclick="scrollToSection('contact')" id="nav-cta" class="px-6 py-2 text-sm rounded-full font-bold bg-white text-indigo-700 hover:bg-gray-100 transition-all">
+          無料相談はこちら
+        </button>
+      </div>
+
+      <button class="md:hidden text-gray-700 focus:outline-none bg-white/90 p-2 rounded-lg" onclick="toggleMenu()">
+        <i id="menu-icon" class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 md:hidden flex-col space-y-4 border-t border-gray-100 animate-fade-in-down">
+      <button onclick="scrollToSection('concept')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">コンセプト</button>
+      <button onclick="scrollToSection('management')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">マネジメント</button>
+      <button onclick="scrollToSection('features')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">特徴</button>
+      <button onclick="scrollToSection('story')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">ストーリー</button>
+      <button onclick="scrollToSection('pricing')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">料金</button>
+      <button onclick="scrollToSection('contact')" class="w-full mt-4 px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+        無料相談お申し込み
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img 
+        src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
+        alt="Study Focus" 
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/95 via-blue-900/80 to-indigo-900/90"></div>
+    </div>
+
+    <div class="relative z-10 container mx-auto px-6 pt-20">
+      <div class="max-w-4xl">
+        <div class="inline-flex items-center gap-2 bg-indigo-800/50 backdrop-blur-sm border border-indigo-400/30 text-indigo-100 px-4 py-2 rounded-full mb-8 animate-fade-in-up">
+          <i class="fas fa-star text-yellow-400"></i>
+          <span class="text-sm font-medium tracking-wide">筑波大学医学類生によるコーチング</span>
+        </div>
+        
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-8 tracking-tight">
+          良い講師も、<br />
+          大量の演習も、<br />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">
+            合否の決定打ではない。
+          </span>
+        </h1>
+        
+        <p class="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed max-w-2xl border-l-4 border-yellow-500 pl-6">
+          必要なのは、誰かに教わる時間ではなく、<br class="hidden md:block" />
+          <strong class="text-white">「自分で考える能力」</strong>を身につけること。<br />
+          戦略とモチベーションの徹底管理で、あなたの「自考力」を覚醒させます。
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-5">
+          <button onclick="scrollToSection('contact')" class="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg bg-yellow-400 text-indigo-900 hover:bg-yellow-300 shadow-yellow-400/20">
+            無料受験相談へ進む
+          </button>
+          <button onclick="scrollToSection('concept')" class="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg bg-transparent text-white border-2 border-white/30 hover:bg-white/10 hover:border-white">
+            Think Do! の哲学を知る
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white/50 animate-bounce">
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-xs tracking-widest uppercase">Scroll</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- Concept Section -->
+  <section id="concept" class="py-24 bg-white relative">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center gap-16">
+        <div class="w-full md:w-1/2">
+          <div class="text-center md:text-left mb-16">
+            <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">OUR PHILOSOPHY</span>
+            <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">なぜ「自考力」なのか</h2>
+            <div class="w-20 h-1.5 mx-auto md:mx-0 mt-6 rounded-full bg-indigo-600"></div>
+          </div>
+          
+          <div class="space-y-8">
+            <div class="flex gap-4 opacity-80">
+              <div class="mt-1"><i class="fas fa-times text-gray-500 text-xl"></i></div>
+              <div>
+                <h4 class="text-lg font-bold text-gray-700 line-through decoration-gray-500">わかりやすい授業を受ける</h4>
+                <p class="text-gray-600 text-sm">「わかったつもり」になるだけで、本番では手が止まってしまう。</p>
+              </div>
+            </div>
+            
+            <div class="flex gap-4 opacity-80">
+              <div class="mt-1"><i class="fas fa-times text-gray-500 text-xl"></i></div>
+              <div>
+                <h4 class="text-lg font-bold text-gray-700 line-through decoration-gray-500">ひたすら問題を解く</h4>
+                <p class="text-gray-600 text-sm">思考停止で数をこなしても、初見の問題には対応できない。</p>
+              </div>
+            </div>
+
+            <div class="bg-indigo-50 p-6 rounded-2xl border-l-4 border-indigo-600 flex gap-4 transform translate-x-2 shadow-lg">
+              <div class="mt-1 bg-indigo-600 rounded-full p-1 text-white h-fit shadow-md">
+                <i class="fas fa-check text-sm"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-indigo-900 mb-2">「なぜ？」を突き詰め、自分で解を導く</h4>
+                <p class="text-indigo-800 leading-relaxed">
+                  受験勉強のゴールは、知識の暗記ではありません。<br />
+                  未知の問題に出会ったとき、手持ちの知識を組み合わせて<br />
+                  <strong class="text-indigo-900 bg-yellow-200 px-1">自力で正解への道を切り拓く「思考体力」</strong>をつけることです。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-10 text-gray-600 leading-relaxed">
+            Think Do! は、単に勉強を教える場所ではありません。<br />
+            医学部合格者が実践してきた<strong>「思考のプロセス」</strong>そのものをインストールし、
+            あなたが一人でも戦えるようになるための「自立」を支援します。
+          </p>
+        </div>
+        
+        <div class="w-full md:w-1/2 relative">
+          <div class="absolute inset-0 bg-gradient-to-tr from-indigo-600 to-blue-400 rounded-2xl transform rotate-3 opacity-20"></div>
+          <img 
+            src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
+            alt="Student thinking deeply" 
+            class="relative rounded-2xl shadow-2xl w-full object-cover h-[500px]"
+          />
+          <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl max-w-xs border border-gray-100">
+            <p class="text-indigo-900 font-bold text-lg mb-1">"答え"ではなく</p>
+            <p class="text-gray-600 text-sm">"答えへの辿り着き方"を学ぶ。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Management Section -->
+  <section id="management" class="py-24 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 px-4">
+        <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">STRATEGY & MOTIVATION</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">合格を支える2つのマネジメント</h2>
+        <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
+      </div>
+      <div class="text-center max-w-2xl mx-auto mb-16 text-gray-600">
+        独学を成功させるために必要なのは、<br/>
+        「正しい努力の方向」と「走り続ける燃料」です。<br/>
+        Think Do!はこの2つを徹底的に管理します。
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+        <!-- Strategy Card -->
+        <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 flex flex-col items-center text-center relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+          <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-8 text-blue-600 group-hover:scale-110 transition-transform duration-300">
+            <i class="fas fa-compass text-4xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">目標からの逆算戦略</h3>
+          <p class="text-gray-600 leading-relaxed mb-6">
+            「今日は何を勉強すればいいんだろう？」<br/>
+            そんな迷いは、時間の最大の無駄です。<br/>
+            <strong class="text-indigo-900">志望校合格というゴールから逆算</strong>し、年間・月間・週間、そして「今日やるべきこと」まで完全に可視化します。
+          </p>
+          <ul class="text-left w-full space-y-3 bg-gray-50 p-6 rounded-xl">
+            <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
+              <i class="fas fa-check-circle text-blue-500"></i>
+              志望校レベルと現状のギャップ分析
+            </li>
+            <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
+              <i class="fas fa-check-circle text-blue-500"></i>
+              無理なく無駄のないカリキュラム作成
+            </li>
+            <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
+              <i class="fas fa-check-circle text-blue-500"></i>
+              日々の修正で計画倒れを防ぐ
+            </li>
+          </ul>
+        </div>
+
+        <!-- Motivation Card -->
+        <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 flex flex-col items-center text-center relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-500 to-red-500"></div>
+          <div class="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mb-8 text-pink-500 group-hover:scale-110 transition-transform duration-300">
+            <i class="fas fa-heart text-4xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">モチベーション伴走</h3>
+          <p class="text-gray-600 leading-relaxed mb-6">
+            独学の最大の敵は「孤独」と「不安」です。<br/>
+            「このままで本当に受かるのか？」という不安を、<br/>
+            定期的な面談と日々のコミュニケーションで解消。<br/>
+            <strong class="text-indigo-900">あなたの心の「燃料」を絶やしません。</strong>
+          </p>
+          <ul class="text-left w-full space-y-3 bg-gray-50 p-6 rounded-xl">
+            <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
+              <i class="fas fa-check-circle text-pink-500"></i>
+              24時間LINE相談で不安を即解消
+            </li>
+            <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
+              <i class="fas fa-check-circle text-pink-500"></i>
+              スランプ時のメンタルケア
+            </li>
+            <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
+              <i class="fas fa-check-circle text-pink-500"></i>
+              できたことを承認し自信をつける
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-24 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 px-4">
+        <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">THE METHOD</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">筑波大医学類生による思考アプローチ</h2>
+        <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col">
+          <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center mb-6 text-indigo-600">
+            <i class="fas fa-brain text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">思考プロセスの言語化</h3>
+          <p class="text-gray-600 leading-relaxed text-sm flex-grow">講師は筑波大医学類生。「なぜその解法を選んだのか」「どこに着眼したのか」という頭の中のプロセスを講師が言語化して伝えます。単なる解法の暗記ではなく、初見問題に応用が効く思考回路を作ります。</p>
+        </div>
+        
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col">
+          <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center mb-6 text-indigo-600">
+            <i class="fas fa-bullseye text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">メタ認知能力の育成</h3>
+          <p class="text-gray-600 leading-relaxed text-sm flex-grow">計画を立てるプロセス自体を共有し、「自分は今どこにいて、何が足りないか」を客観視する力（メタ認知）を養います。これは大学以降も役立つ一生モノのスキルです。</p>
+        </div>
+        
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col">
+          <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center mb-6 text-indigo-600">
+            <i class="fas fa-lightbulb text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">自走するための技術</h3>
+          <p class="text-gray-600 leading-relaxed text-sm flex-grow">周りに塾がない環境でも勝てる理由は、自分で自分を律する力があるから。集中力を高める環境作りや、時間の使い方など、独学で現役合格した先輩だからこそ知る「自走術」を伝授します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder Story Section -->
+  <section id="story" class="py-24 bg-indigo-900 text-white relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-1/2 h-full bg-indigo-800/30 skew-x-12 transform origin-top"></div>
+    
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="text-center mb-16 px-4">
+        <span class="font-bold tracking-widest uppercase text-sm text-indigo-300">STORY</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-white">代表メッセージ</h2>
+        <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-yellow-400"></div>
+      </div>
+      
+      <div class="max-w-4xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/10">
+        <div class="flex flex-col md:flex-row gap-10 items-start">
+          <div class="w-full md:w-1/3 shrink-0">
+            <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl bg-gray-200 relative group">
+              <img 
+                src="https://images.unsplash.com/photo-1507537509458-b8312d35a233?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                alt="Founder" 
+                class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
+              />
+              <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4">
+                <p class="text-sm font-bold text-white">筑波大学 医学類在学</p>
+                <p class="text-xs text-gray-300">Think Do! 代表</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="w-full md:w-2/3 space-y-6 text-indigo-50 leading-relaxed">
+            <h3 class="text-2xl font-bold text-white mb-4">
+              「周りに何もない」が、<br />
+              最強の武器になった。
+            </h3>
+            <p>
+              田舎に住んでいた私は、塾に行くという選択肢がありませんでした。<br />
+              最初は不安でしたが、今思えばそれが最大の幸運でした。
+            </p>
+            <p>
+              誰かに教えてもらえないからこそ、<br />
+              <span class="text-yellow-400 font-bold">「教科書をどう読めば理解できるか」「なぜこの答えになるのか」</span>
+              を、脳がちぎれるほど自分で考え抜くしかなかったのです。
+            </p>
+            <p>
+              その過程で身につけたのは、目標から逆算して計画を立てる<strong class="text-white">「戦略性」</strong>と、自分自身を鼓舞し続ける<strong class="text-white">「メンタル管理」</strong>でした。
+            </p>
+            <p>
+              大学に入ってからも、社会に出てからも、本当に役立つのは「誰かに教わった知識」ではなく「自分で答えを導き出す力」です。<br />
+              私たちが教えたいのは、受験のその先でも使える、本質的な強さです。
+            </p>
+            <div class="pt-4">
+              <p class="font-handwriting text-2xl text-yellow-400 rotate-2 inline-block transform">Think, then Do.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="py-24 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 px-4">
+        <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">PLAN</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">コース・料金</h2>
+        <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
+      </div>
+      
+      <div class="max-w-7xl mx-auto grid lg:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- Light Plan -->
+        <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all order-2 lg:order-1 relative flex flex-col h-full">
+          <div class="mb-6">
+            <div class="inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold mb-3">お試し・自律学習向け</div>
+            <h3 class="text-xl font-bold text-gray-900">ライト戦略コース</h3>
+            <p class="text-gray-500 text-xs mt-2">プロに「年間の地図」を作って欲しい方へ。<br/>自習習慣がある方向けのエントリープラン。</p>
+          </div>
+          <div class="flex items-baseline mb-6">
+            <span class="text-3xl font-extrabold text-gray-900">14,800</span>
+            <span class="text-xs text-gray-500 ml-2">円 / 月 (税込)</span>
+          </div>
+          
+          <div class="space-y-3 mb-8 flex-grow">
+            <div class="flex items-start gap-3">
+              <i class="fas fa-compass text-blue-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-sm text-gray-800">月1回 戦略面談 (30分)</span>
+                <p class="text-[10px] text-gray-500">現状確認と翌1ヶ月の戦略すり合わせ</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-map text-blue-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-sm text-gray-800">月次・週間 カリキュラム作成</span>
+                <p class="text-[10px] text-gray-500">どの教材をどの順番で進めるかを設計</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-book-open text-blue-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-sm text-gray-800">教材選定アドバイス</span>
+                <p class="text-[10px] text-gray-500">レベルに合わせた最適ルートを提案</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 opacity-50">
+              <i class="fas fa-times text-gray-400 mt-1"></i>
+              <span class="text-xs text-gray-500 line-through">LINE質問相談・週次面談</span>
+            </div>
+          </div>
+          
+          <button onclick="scrollToSection('contact')" class="w-full py-3 text-sm rounded-full font-bold bg-white text-indigo-800 border-2 border-indigo-100 hover:bg-indigo-50 hover:border-indigo-300 transition-all">
+            まずは相談する
+          </button>
+        </div>
+
+        <!-- Standard Plan -->
+        <div class="bg-white p-8 rounded-2xl shadow-2xl border-2 border-indigo-500 relative transform lg:-translate-y-4 order-1 lg:order-2 z-10 flex flex-col h-full">
+          <div class="absolute top-0 right-0 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
+            人気No.1
+          </div>
+          <div class="mb-6">
+            <h3 class="text-2xl font-bold text-indigo-900">自考力養成コース</h3>
+            <p class="text-gray-500 text-sm mt-2">学習管理＋思考コーチング＋メンタル伴走。<br/>迷わず走り続けるためのスタンダードプラン。</p>
+          </div>
+          <div class="flex items-baseline mb-8">
+            <span class="text-4xl font-extrabold text-indigo-600">29,800</span>
+            <span class="text-sm text-gray-500 ml-2">円 / 月 (税込)</span>
+          </div>
+          
+          <div class="space-y-4 mb-8 flex-grow">
+            <div class="flex items-start gap-3">
+              <i class="fas fa-check-circle text-indigo-600 mt-1"></i>
+              <div>
+                <span class="font-bold text-gray-800">週間学習計画の作成</span>
+                <p class="text-xs text-gray-500">ゴールから逆算し、今週やるべきことを明確化</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-brain text-indigo-600 mt-1"></i>
+              <div>
+                <span class="font-bold text-gray-800">週1回 思考コーチング面談 (30分)</span>
+                <p class="text-xs text-gray-500">「考え方」を指導し、メタ認知能力を育成</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-heart text-pink-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-gray-800">LINE質問・相談し放題</span>
+                <p class="text-xs text-gray-500">勉強内容に加え、メンタル相談も24時間歓迎</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-check-circle text-indigo-600 mt-1"></i>
+              <div>
+                <span class="font-bold text-gray-800">教材選定・切り替え提案</span>
+              </div>
+            </div>
+          </div>
+          
+          <button onclick="scrollToSection('contact')" class="w-full py-4 text-lg rounded-full font-bold bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:shadow-indigo-500/30 shadow-lg transition-all">
+            詳しく見る
+          </button>
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all order-3 lg:order-3 relative flex flex-col h-full">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-t-2xl"></div>
+          <div class="mb-6 mt-2">
+            <div class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold mb-3">毎月5名限定</div>
+            <h3 class="text-xl font-bold text-gray-900">徹底マネジメントコース</h3>
+            <p class="text-gray-500 text-xs mt-2">医学部・難関大志望向け。<br/>日次管理と添削で合格へ導くフルサポート。</p>
+          </div>
+          <div class="flex items-baseline mb-6">
+            <span class="text-3xl font-extrabold text-gray-900">49,800</span>
+            <span class="text-xs text-gray-500 ml-2">円 / 月 (税込)</span>
+          </div>
+          
+          <div class="space-y-3 mb-8 flex-grow">
+            <div class="flex items-start gap-3">
+              <i class="fas fa-bolt text-yellow-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-sm text-gray-800">日次レベルの緻密な計画管理</span>
+                <p class="text-[10px] text-gray-500">「今日やる問題」まで明確化</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-users text-yellow-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-sm text-gray-800">週1回 戦略面談 (60分)</span>
+                <p class="text-[10px] text-gray-500">過去問分解・思考プロセス徹底解説</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-check-circle text-yellow-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-sm text-gray-800">記述・論述・小論文添削</span>
+                <p class="text-[10px] text-gray-500">2次試験対策・模試徹底分析</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-star text-yellow-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-sm text-gray-800">優先LINE対応</span>
+                <p class="text-[10px] text-gray-500">12時間以内の返信確約</p>
+              </div>
+            </div>
+          </div>
+          
+          <button onclick="scrollToSection('contact')" class="w-full py-3 text-sm rounded-full font-bold bg-white text-gray-700 border-2 border-gray-200 hover:border-indigo-600 hover:text-indigo-600 transition-all">
+            今すぐ申し込む
+          </button>
+        </div>
+
+      </div>
+      
+      <div class="mt-12 text-center">
+        <p class="text-sm text-gray-500">
+          ※ 入会金は現在キャンペーン中で無料です。<br/>
+          ※ どのコースが合っているかわからない場合も、無料相談にてご提案させていただきます。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-24 bg-indigo-900 relative">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-600 rounded-full blur-3xl opacity-20"></div>
+      <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-500 rounded-full blur-3xl opacity-20"></div>
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+          あなたの「考える力」を<br />
+          無料相談で診断しませんか？
+        </h2>
+        <p class="text-indigo-200 text-lg leading-relaxed">
+          今の勉強法で、初見の問題が解けるようになりますか？<br />
+          筑波大医学類生が、あなたの現状を分析し、合格への最短ルートを提案します。<br />
+          <span class="text-sm mt-2 block opacity-70">※ 無理な勧誘は一切いたしません。</span>
+        </p>
+      </div>
+
+      <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div class="p-8 md:p-10">
+          <form id="inquiry-form" class="space-y-6">
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">お名前 <span class="text-red-500">*</span></label>
+              <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all" placeholder="例：筑波 太郎" />
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">メールアドレス <span class="text-red-500">*</span></label>
+                <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all" placeholder="example@email.com" />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">現在の学年 <span class="text-red-500">*</span></label>
+                <select name="grade" required class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all">
+                  <option value="">選択してください</option>
+                  <option value="高校3年生">高校3年生</option>
+                  <option value="高校2年生">高校2年生</option>
+                  <option value="高校1年生">高校1年生</option>
+                  <option value="既卒生">既卒生</option>
+                  <option value="保護者">保護者</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">現在の学習状況・悩み</label>
+              <textarea name="message" rows="3" class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all" placeholder="例：数学の応用問題になると手が止まってしまいます..."></textarea>
+            </div>
+            
+            <!-- Error/Success Message -->
+            <div id="form-message" class="hidden p-4 rounded-lg text-center font-bold"></div>
+            
+            <button type="submit" id="submit-btn" class="w-full py-4 text-xl rounded-full font-bold shadow-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:shadow-indigo-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+              無料で学習相談をする
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800 text-sm">
+    <div class="container mx-auto px-6 text-center">
+      <p class="mb-4 text-lg font-bold text-white tracking-widest">Think Do!</p>
+      <p>&copy; 2024 Study Management Think Do! All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Navigation scroll effect
+    let scrolled = false;
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      const navLogo = document.getElementById('nav-logo');
+      const navTitle = document.getElementById('nav-title');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const navCta = document.getElementById('nav-cta');
+      
+      if (window.scrollY > 50 && !scrolled) {
+        scrolled = true;
+        navbar.classList.remove('bg-transparent', 'py-5');
+        navbar.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-md', 'py-3');
+        navLogo.classList.remove('bg-white', 'text-indigo-900');
+        navLogo.classList.add('bg-indigo-600', 'text-white');
+        navTitle.classList.remove('text-white');
+        navTitle.classList.add('text-gray-900');
+        navLinks.forEach(link => {
+          link.classList.remove('text-gray-200');
+          link.classList.add('text-gray-600');
+        });
+        navCta.classList.remove('bg-white', 'text-indigo-700', 'hover:bg-gray-100');
+        navCta.classList.add('bg-indigo-600', 'text-white');
+      } else if (window.scrollY <= 50 && scrolled) {
+        scrolled = false;
+        navbar.classList.add('bg-transparent', 'py-5');
+        navbar.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-md', 'py-3');
+        navLogo.classList.add('bg-white', 'text-indigo-900');
+        navLogo.classList.remove('bg-indigo-600', 'text-white');
+        navTitle.classList.add('text-white');
+        navTitle.classList.remove('text-gray-900');
+        navLinks.forEach(link => {
+          link.classList.add('text-gray-200');
+          link.classList.remove('text-gray-600');
+        });
+        navCta.classList.add('bg-white', 'text-indigo-700', 'hover:bg-gray-100');
+        navCta.classList.remove('bg-indigo-600', 'text-white');
+      }
+    });
+
+    // Mobile menu toggle
+    let menuOpen = false;
+    function toggleMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('menu-icon');
+      menuOpen = !menuOpen;
+      
+      if (menuOpen) {
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('flex');
+        menuIcon.classList.remove('fa-bars');
+        menuIcon.classList.add('fa-times');
+      } else {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex');
+        menuIcon.classList.add('fa-bars');
+        menuIcon.classList.remove('fa-times');
+      }
+    }
+
+    // Scroll to section
+    function scrollToSection(id) {
+      if (menuOpen) toggleMenu();
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Form submission
+    document.getElementById('inquiry-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const form = e.target;
+      const submitBtn = document.getElementById('submit-btn');
+      const formMessage = document.getElementById('form-message');
+      
+      // Get form data
+      const formData = new FormData(form);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        grade: formData.get('grade'),
+        message: formData.get('message')
+      };
+      
+      // Disable submit button
+      submitBtn.disabled = true;
+      submitBtn.textContent = '送信中...';
+      formMessage.classList.add('hidden');
+      
+      try {
+        const response = await fetch('/api/inquiries', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          formMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+          formMessage.classList.add('bg-green-100', 'text-green-700');
+          formMessage.textContent = result.message;
+          form.reset();
+        } else {
+          formMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+          formMessage.classList.add('bg-red-100', 'text-red-700');
+          formMessage.textContent = result.error;
+        }
+      } catch (error) {
+        formMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+        formMessage.classList.add('bg-red-100', 'text-red-700');
+        formMessage.textContent = 'エラーが発生しました。しばらく経ってからお試しください。';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '無料で学習相談をする';
+      }
+    });
+  </script>
+</body>
+</html>`
+  return c.html(html)
+})
+
+export default app
