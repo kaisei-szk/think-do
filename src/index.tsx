@@ -14,6 +14,9 @@ app.use('/api/*', cors())
 // API Routes
 // ============================================
 
+// Web3Forms API Key
+const WEB3FORMS_KEY = 'cda154cc-7cd9-452d-8f96-6a3057a97000'
+
 // Submit inquiry
 app.post('/api/inquiries', async (c) => {
   const { env } = c
@@ -37,6 +40,49 @@ app.post('/api/inquiries', async (c) => {
     const result = await env.DB.prepare(`
       INSERT INTO inquiries (name, email, grade, message) VALUES (?, ?, ?, ?)
     `).bind(name, email, grade, message || '').run()
+    
+    // Send email notification via Web3Forms
+    try {
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `【Think Do!】新しいお問い合わせ - ${name}様`,
+          from_name: 'Think Do! お問い合わせフォーム',
+          name: name,
+          email: email,
+          grade: grade,
+          message: message || '（記載なし）',
+          // Format the email nicely
+          custom_message: `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+新しいお問い合わせがありました
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【お名前】
+${name}
+
+【メールアドレス】
+${email}
+
+【学年】
+${grade}
+
+【学習状況・悩み】
+${message || '（記載なし）'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+※ このメールはThink Do!のお問い合わせフォームから自動送信されています。
+          `.trim()
+        })
+      })
+    } catch (emailError) {
+      // Email sending failed, but DB insert succeeded
+      console.error('Email notification failed:', emailError)
+    }
     
     return c.json({ 
       success: true, 
