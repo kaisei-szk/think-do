@@ -3,6 +3,7 @@ import { cors } from 'hono/cors'
 
 type Bindings = {
   DB: D1Database
+  ADMIN_TOKEN?: string
 }
 
 const app = new Hono<{ Bindings: Bindings }>()
@@ -17,8 +18,20 @@ app.use('/api/*', cors())
 // Web3Forms API Key
 const WEB3FORMS_KEY = 'cda154cc-7cd9-452d-8f96-6a3057a97000'
 
+const requireAdmin = (c: { env: Bindings; req: { header: (name: string) => string | undefined } }) => {
+  const token = c.env.ADMIN_TOKEN
+  const headerToken = c.req.header('x-admin-token')
+  if (!token || token !== headerToken) {
+    return c.json({ success: false, error: 'Not found' }, 404)
+  }
+  return null
+}
+
 // Submit inquiry
 app.post('/api/inquiries', async (c) => {
+  const auth = requireAdmin(c)
+  if (auth) return auth
+
   const { env } = c
   
   try {
@@ -97,6 +110,9 @@ ${message || '（記載なし）'}
 
 // Get all inquiries (admin endpoint)
 app.get('/api/inquiries', async (c) => {
+  const auth = requireAdmin(c)
+  if (auth) return auth
+
   const { env } = c
   
   try {
