@@ -6,6 +6,7 @@
   <title>Think Do! | 筑波大医学類生による学習コーチング</title>
   <meta name="description" content="筑波大医学類生による受験コーチング。自考力を養成し、合格への最短ルートを導きます。">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     @keyframes fade-in-up {
@@ -538,7 +539,7 @@
       <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div class="p-8 md:p-10">
           <form id="inquiry-form" class="space-y-6">
-            <input type="hidden" name="access_key" value="cda154cc-7cd9-452d-8f96-6a3057a97000" />
+            <input type="hidden" name="access_key" value="68c09aaf-6c18-44d5-8102-5c6902d43a53" />
             <input type="text" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-2">お名前 <span class="text-red-500">*</span></label>
@@ -569,6 +570,10 @@
             <!-- Error/Success Message -->
             <div id="form-message" class="hidden p-4 rounded-lg text-center font-bold"></div>
             
+            <div class="flex justify-center">
+              <div class="h-captcha" data-sitekey="ES_105bfbe4869e45628149e39eca3dd901"></div>
+            </div>
+            
             <button type="submit" id="submit-btn" class="w-full py-4 text-xl rounded-full font-bold shadow-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:shadow-indigo-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
               無料で学習相談をする
             </button>
@@ -587,7 +592,7 @@
   </footer>
 
   <script>
-    const WEB3FORMS_KEY = 'cda154cc-7cd9-452d-8f96-6a3057a97000';
+    const WEB3FORMS_KEY = '68c09aaf-6c18-44d5-8102-5c6902d43a53';
 
     // Navigation scroll effect
     let scrolled = false;
