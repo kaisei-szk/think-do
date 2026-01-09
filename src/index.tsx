@@ -16,7 +16,7 @@ app.use('/api/*', cors())
 // ============================================
 
 // Web3Forms API Key
-const WEB3FORMS_KEY = 'cda154cc-7cd9-452d-8f96-6a3057a97000'
+const WEB3FORMS_KEY = '68c09aaf-6c18-44d5-8102-5c6902d43a53'
 
 const requireAdmin = (c: { env: Bindings; req: { header: (name: string) => string | undefined } }) => {
   const token = c.env.ADMIN_TOKEN
@@ -145,6 +145,7 @@ app.get('/', (c) => {
   <title>Think Do! | 筑波大医学類生による学習コーチング</title>
   <meta name="description" content="筑波大医学類生による受験コーチング。自考力を養成し、合格への最短ルートを導きます。">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     @keyframes fade-in-up {
@@ -347,7 +348,7 @@ app.get('/', (c) => {
             そんな迷いは、時間の最大の無駄です。<br/>
             <strong class="text-indigo-900">志望校合格というゴールから逆算</strong>し、年間・月間・週間、そして「今日やるべきこと」まで完全に可視化します。
           </p>
-          <ul class="text-left w-full space-y-3 bg-gray-50 p-6 rounded-xl">
+          <ul class="text-left w-full max-w-xs mx-auto space-y-3 bg-gray-50 p-6 rounded-xl">
             <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
               <i class="fas fa-check-circle text-blue-500"></i>
               志望校レベルと現状のギャップ分析
@@ -376,7 +377,7 @@ app.get('/', (c) => {
             定期的な面談と日々のコミュニケーションで解消。<br/>
             <strong class="text-indigo-900">あなたの心の火を絶やさないよう支えます。</strong>
           </p>
-          <ul class="text-left w-full space-y-3 bg-gray-50 p-6 rounded-xl">
+          <ul class="text-left w-full max-w-xs mx-auto space-y-3 bg-gray-50 p-6 rounded-xl">
             <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
               <i class="fas fa-check-circle text-pink-500"></i>
               24時間LINE相談で不安を即解消
@@ -444,22 +445,8 @@ app.get('/', (c) => {
       </div>
       
       <div class="max-w-4xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/10">
-        <div class="flex flex-col md:flex-row gap-10 items-start">
-          <div class="w-full md:w-1/3 shrink-0">
-            <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl bg-gray-200 relative group">
-              <img 
-                src="https://images.unsplash.com/photo-1507537509458-b8312d35a233?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                alt="Founder" 
-                class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
-              />
-              <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4">
-                <p class="text-sm font-bold text-white">筑波大学 医学類在学</p>
-                <p class="text-xs text-gray-300">Think Do! 代表</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="w-full md:w-2/3 space-y-6 text-indigo-50 leading-relaxed">
+        <div class="flex flex-col gap-10 items-start">
+          <div class="w-full space-y-6 text-indigo-50 leading-relaxed">
             <h3 class="text-2xl font-bold text-white mb-4">
               「周りに何もない」が、<br />
               最強の武器になった。
@@ -677,6 +664,8 @@ app.get('/', (c) => {
       <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div class="p-8 md:p-10">
           <form id="inquiry-form" class="space-y-6">
+            <input type="hidden" name="access_key" value="68c09aaf-6c18-44d5-8102-5c6902d43a53" />
+            <input type="text" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-2">お名前 <span class="text-red-500">*</span></label>
               <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all" placeholder="例：筑波 太郎" />
@@ -706,6 +695,10 @@ app.get('/', (c) => {
             <!-- Error/Success Message -->
             <div id="form-message" class="hidden p-4 rounded-lg text-center font-bold"></div>
             
+            <div class="flex justify-center">
+              <div class="h-captcha" data-sitekey="ES_105bfbe4869e45628149e39eca3dd901"></div>
+            </div>
+            
             <button type="submit" id="submit-btn" class="w-full py-4 text-xl rounded-full font-bold shadow-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:shadow-indigo-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
               無料で学習相談をする
             </button>
@@ -724,6 +717,8 @@ app.get('/', (c) => {
   </footer>
 
   <script>
+    const WEB3FORMS_KEY = '68c09aaf-6c18-44d5-8102-5c6902d43a53';
+
     // Navigation scroll effect
     let scrolled = false;
     window.addEventListener('scroll', () => {
@@ -804,8 +799,13 @@ app.get('/', (c) => {
         name: formData.get('name'),
         email: formData.get('email'),
         grade: formData.get('grade'),
-        message: formData.get('message')
+        message: formData.get('message'),
+        botcheck: formData.get('botcheck')
       };
+
+      if (data.botcheck) {
+        return;
+      }
       
       // Disable submit button
       submitBtn.disabled = true;
@@ -813,12 +813,34 @@ app.get('/', (c) => {
       formMessage.classList.add('hidden');
       
       try {
-        const response = await fetch('/api/inquiries', {
+        const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: '【Think Do!】新しいお問い合わせ - ' + data.name + '様',
+            from_name: 'Think Do! お問い合わせフォーム',
+            name: data.name,
+            email: data.email,
+            grade: data.grade,
+            message: data.message || '（記載なし）',
+            custom_message:
+              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+              '新しいお問い合わせがありました\n' +
+              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+              '【お名前】\n' +
+              data.name + '\n\n' +
+              '【メールアドレス】\n' +
+              data.email + '\n\n' +
+              '【学年】\n' +
+              data.grade + '\n\n' +
+              '【学習状況・悩み】\n' +
+              (data.message || '（記載なし）') + '\n\n' +
+              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+              '※ このメールはThink Do!のお問い合わせフォームから自動送信されています。'
+          })
         });
         
         const result = await response.json();
@@ -826,12 +848,12 @@ app.get('/', (c) => {
         if (result.success) {
           formMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700');
           formMessage.classList.add('bg-green-100', 'text-green-700');
-          formMessage.textContent = result.message;
+          formMessage.textContent = 'お問い合わせを受け付けました。担当者より折り返しご連絡いたします。';
           form.reset();
         } else {
           formMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
           formMessage.classList.add('bg-red-100', 'text-red-700');
-          formMessage.textContent = result.error;
+          formMessage.textContent = result.message || 'エラーが発生しました。しばらく経ってからお試しください。';
         }
       } catch (error) {
         formMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
