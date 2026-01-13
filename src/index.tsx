@@ -145,7 +145,6 @@ app.get('/', (c) => {
   <title>Think Do! | 筑波大医学類生による学習コーチング</title>
   <meta name="description" content="筑波大医学類生による受験コーチング。自考力を養成し、合格への最短ルートを導きます。">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     @keyframes fade-in-up {
@@ -663,9 +662,9 @@ app.get('/', (c) => {
 
       <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div class="p-8 md:p-10">
-          <form id="inquiry-form" class="space-y-6">
-            <input type="hidden" name="access_key" value="68c09aaf-6c18-44d5-8102-5c6902d43a53" />
-            <input type="text" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+          <form id="inquiry-form" name="inquiry" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="space-y-6">
+            <input type="hidden" name="form-name" value="inquiry" />
+            <input type="text" name="bot-field" class="hidden" tabindex="-1" autocomplete="off" />
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-2">お名前 <span class="text-red-500">*</span></label>
               <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all" placeholder="例：筑波 太郎" />
@@ -696,7 +695,7 @@ app.get('/', (c) => {
             <div id="form-message" class="hidden p-4 rounded-lg text-center font-bold"></div>
             
             <div class="flex justify-center">
-              <div class="h-captcha" data-sitekey="f796dae0-1154-44b0-8f90-f5d4e5fee95c"></div>
+              <div data-netlify-recaptcha="true"></div>
             </div>
             
             <button type="submit" id="submit-btn" class="w-full py-4 text-xl rounded-full font-bold shadow-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:shadow-indigo-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
@@ -717,8 +716,6 @@ app.get('/', (c) => {
   </footer>
 
   <script>
-    const WEB3FORMS_KEY = '68c09aaf-6c18-44d5-8102-5c6902d43a53';
-
     // Navigation scroll effect
     let scrolled = false;
     window.addEventListener('scroll', () => {
@@ -785,94 +782,6 @@ app.get('/', (c) => {
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Form submission
-    document.getElementById('inquiry-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const form = e.target;
-      const submitBtn = document.getElementById('submit-btn');
-      const formMessage = document.getElementById('form-message');
-      
-      // Get form data
-      const formData = new FormData(form);
-      const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        grade: formData.get('grade'),
-        message: formData.get('message'),
-        botcheck: formData.get('botcheck'),
-        hcaptcha: formData.get('h-captcha-response')
-      };
-
-      if (data.botcheck) {
-        return;
-      }
-
-      if (!data.hcaptcha) {
-        formMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
-        formMessage.classList.add('bg-red-100', 'text-red-700');
-        formMessage.textContent = '認証を完了してください。';
-        return;
-      }
-      
-      // Disable submit button
-      submitBtn.disabled = true;
-      submitBtn.textContent = '送信中...';
-      formMessage.classList.add('hidden');
-      
-      try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            'h-captcha-response': data.hcaptcha,
-            subject: '【Think Do!】新しいお問い合わせ - ' + data.name + '様',
-            from_name: 'Think Do! お問い合わせフォーム',
-            name: data.name,
-            email: data.email,
-            grade: data.grade,
-            message: data.message || '（記載なし）',
-            custom_message:
-              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
-              '新しいお問い合わせがありました\n' +
-              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
-              '【お名前】\n' +
-              data.name + '\n\n' +
-              '【メールアドレス】\n' +
-              data.email + '\n\n' +
-              '【学年】\n' +
-              data.grade + '\n\n' +
-              '【学習状況・悩み】\n' +
-              (data.message || '（記載なし）') + '\n\n' +
-              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
-              '※ このメールはThink Do!のお問い合わせフォームから自動送信されています。'
-          })
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-          formMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700');
-          formMessage.classList.add('bg-green-100', 'text-green-700');
-          formMessage.textContent = 'お問い合わせを受け付けました。担当者より折り返しご連絡いたします。';
-          form.reset();
-        } else {
-          formMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
-          formMessage.classList.add('bg-red-100', 'text-red-700');
-          formMessage.textContent = result.message || 'エラーが発生しました。しばらく経ってからお試しください。';
-        }
-      } catch (error) {
-        formMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
-        formMessage.classList.add('bg-red-100', 'text-red-700');
-        formMessage.textContent = 'エラーが発生しました。しばらく経ってからお試しください。';
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = '無料で学習相談をする';
-      }
-    });
   </script>
 </body>
 </html>`
