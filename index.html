@@ -3,8 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Think Do! | 筑波大学医学類生による学習コーチング</title>
-  <meta name="description" content="筑波大学医学類生による受験コーチング。自考力を養成し、合格への最短ルートを導きます。">
+  <title>医学部受験アシスト | 現役医学生×休息設計で無理なく最短合格</title>
+  <meta name="description" content="講師は全員、志望校に通う現役医学生。短時間スタート→質の高い休息→徐々に拡張する“続けられる学習設計”で、無理せず最短で医学部合格へ。完全オンライン・全国対応。">
+
+  <!-- OGP -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="医学部受験アシスト | 現役医学生×休息設計で無理なく最短合格">
+  <meta property="og:description" content="1日12時間勉強しなくても、やりたいことを我慢しなくても、医学部に合格できる。現役医学生による“リアルな思考”と、休息の質を上げて続けられるスケジュール設計で、精神的にも安定したまま結果を出す。">
+  <meta property="og:url" content="https://think-do-study.netlify.app/">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1513258496099-48168024aec0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80">
+  <meta property="og:site_name" content="医学部受験アシスト">
+  <meta property="og:locale" content="ja_JP">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="医学部受験アシスト | 現役医学生×休息設計で無理なく最短合格">
+  <meta name="twitter:description" content="1日12時間勉強しなくても、やりたいことを我慢しなくても、医学部に合格できる。現役医学生による“リアルな思考”と、休息の質を上げて続けられるスケジュール設計で、精神的にも安定したまま結果を出す。">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1513258496099-48168024aec0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80">
+  <meta name="theme-color" content="#162332">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -20,6 +37,511 @@
     .animate-fade-in-down { animation: fade-in-down 0.3s ease-out; }
     .font-handwriting { font-family: 'Brush Script MT', cursive; }
     html { scroll-behavior: smooth; }
+
+    /* Tutor avatar marquee */
+    @keyframes marquee-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track {
+      animation: marquee-scroll 50s linear infinite;
+      width: max-content;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes float-soft {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
+    }
+    .float-soft { animation: float-soft 4s ease-in-out infinite; }
+    .marquee-fade-mask {
+      mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    }
+
+    :root {
+      --ink: #162332;
+      --ink-2: #263545;
+      --teal: #0f766e;
+      --teal-deep: #0c5f5b;
+      --sage: #e7f0ec;
+      --paper: #f8f8f4;
+      --line: #dde5df;
+      --gold: #b89246;
+      --gold-soft: #f3ead5;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      color: var(--ink);
+      background: var(--paper) !important;
+      letter-spacing: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .font-bold, .font-extrabold {
+      letter-spacing: 0 !important;
+    }
+
+    .container {
+      max-width: 1180px !important;
+    }
+
+    section[id] {
+      scroll-margin-top: 88px;
+    }
+
+    .rounded-xl,
+    .rounded-2xl,
+    .rounded-3xl {
+      border-radius: 8px !important;
+    }
+
+    .shadow-sm,
+    .shadow-md,
+    .shadow-lg,
+    .shadow-xl,
+    .shadow-2xl {
+      box-shadow: 0 18px 48px rgba(22, 35, 50, 0.08) !important;
+    }
+
+    .bg-gray-50 {
+      background-color: var(--paper) !important;
+    }
+
+    .text-gray-900,
+    .text-indigo-900,
+    .text-indigo-800 {
+      color: var(--ink) !important;
+    }
+
+    .text-gray-800 {
+      color: var(--ink-2) !important;
+    }
+
+    .text-indigo-700,
+    .text-indigo-600,
+    .text-blue-600 {
+      color: var(--teal) !important;
+    }
+
+    .text-yellow-400,
+    .text-yellow-500,
+    .text-amber-600,
+    .text-amber-700 {
+      color: var(--gold) !important;
+    }
+
+    .bg-indigo-50,
+    .bg-blue-50 {
+      background-color: var(--sage) !important;
+    }
+
+    .bg-indigo-100,
+    .bg-blue-100 {
+      background-color: #d9ebe5 !important;
+    }
+
+    .bg-indigo-600,
+    .bg-blue-600 {
+      background-color: var(--teal) !important;
+    }
+
+    .bg-indigo-700,
+    .bg-indigo-800,
+    .bg-indigo-900 {
+      background-color: var(--ink) !important;
+    }
+
+    .border-indigo-100,
+    .border-blue-100 {
+      border-color: var(--line) !important;
+    }
+
+    .border-indigo-300,
+    .border-indigo-400,
+    .border-indigo-500,
+    .border-indigo-600 {
+      border-color: var(--teal) !important;
+    }
+
+    .from-indigo-600,
+    .from-blue-500 {
+      --tw-gradient-from: var(--teal) var(--tw-gradient-from-position) !important;
+      --tw-gradient-to: rgba(15, 118, 110, 0) var(--tw-gradient-to-position) !important;
+      --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+    }
+
+    .to-blue-600,
+    .to-indigo-600 {
+      --tw-gradient-to: #18516a var(--tw-gradient-to-position) !important;
+    }
+
+    .from-yellow-300,
+    .from-yellow-400 {
+      --tw-gradient-from: #d6b66c var(--tw-gradient-from-position) !important;
+      --tw-gradient-to: rgba(214, 182, 108, 0) var(--tw-gradient-to-position) !important;
+      --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+    }
+
+    .to-yellow-500,
+    .to-yellow-600 {
+      --tw-gradient-to: var(--gold) var(--tw-gradient-to-position) !important;
+    }
+
+    .hover\:scale-105:hover,
+    .hover\:scale-110:hover {
+      transform: translateY(-2px) !important;
+    }
+
+    .tracking-widest {
+      letter-spacing: 0.12em !important;
+    }
+
+    #navbar {
+      border-bottom: 1px solid transparent;
+    }
+
+    #navbar.bg-white\/95 {
+      background: rgba(255, 255, 255, 0.94) !important;
+      border-bottom-color: rgba(221, 229, 223, 0.9);
+      box-shadow: 0 12px 28px rgba(22, 35, 50, 0.08) !important;
+    }
+
+    #nav-logo {
+      border-radius: 8px !important;
+      box-shadow: 0 8px 24px rgba(22, 35, 50, 0.1);
+    }
+
+    #nav-cta,
+    #mobile-cta button,
+    button[onclick*="contact"] {
+      box-shadow: 0 12px 28px rgba(15, 118, 110, 0.2) !important;
+    }
+
+    header {
+      min-height: 94vh !important;
+      background: var(--ink);
+      isolation: isolate;
+    }
+
+    header > .absolute.inset-0.z-0 img {
+      filter: saturate(0.92) contrast(1.04);
+      object-position: center;
+    }
+
+    header > .absolute.inset-0.z-0 .absolute.inset-0 {
+      background:
+        linear-gradient(90deg, rgba(13, 26, 39, 0.96) 0%, rgba(13, 26, 39, 0.86) 45%, rgba(13, 26, 39, 0.52) 100%) !important;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 96px;
+      background: linear-gradient(to bottom, rgba(248, 248, 244, 0), var(--paper));
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.78fr);
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+
+    .hero-badge {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-color: rgba(255, 255, 255, 0.24) !important;
+      color: rgba(255, 255, 255, 0.92) !important;
+    }
+
+    .hero-photo-stack {
+      position: relative;
+      min-height: 520px;
+      display: block;
+    }
+
+    .hero-photo {
+      position: absolute;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.24);
+    }
+
+    .hero-photo img,
+    .section-photo-ribbon img,
+    .photo-panel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.92) contrast(1.02);
+    }
+
+    .hero-photo-main {
+      inset: 0 4% 16% 8%;
+      border-radius: 8px;
+    }
+
+    .hero-photo-sub {
+      right: 0;
+      bottom: 4%;
+      width: 58%;
+      height: 34%;
+      border-radius: 8px;
+    }
+
+    .hero-photo-note {
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      bottom: 0;
+      width: 48%;
+      min-height: 112px;
+      padding: 18px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--ink);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-note-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--gold);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .hero-note-line {
+      height: 8px;
+      border-radius: 999px;
+      background: #d8e4df;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .hero-note-line:nth-child(2) {
+      width: 84%;
+      background: var(--teal);
+    }
+
+    .hero-note-line:nth-child(3) {
+      width: 68%;
+    }
+
+    .hero-note-line:nth-child(4) {
+      width: 48%;
+    }
+
+    #concept,
+    #online,
+    #guarantee,
+    #operator {
+      background: #fff !important;
+    }
+
+    #management,
+    #features,
+    #coverage,
+    #pricing,
+    #flow {
+      background:
+        linear-gradient(180deg, rgba(248, 248, 244, 0.92), rgba(239, 246, 242, 0.72)) !important;
+      border-top: 1px solid rgba(221, 229, 223, 0.75);
+      border-bottom: 1px solid rgba(221, 229, 223, 0.75);
+    }
+
+    #cost > .absolute.inset-0.opacity-30,
+    #contact > .absolute.inset-0.overflow-hidden {
+      display: none !important;
+    }
+
+    #cost {
+      background:
+        linear-gradient(180deg, #fff 0%, #fff6f1 100%) !important;
+    }
+
+    #story,
+    #contact,
+    footer {
+      background:
+        linear-gradient(135deg, #102032 0%, #163646 48%, #0f3f3d 100%) !important;
+    }
+
+    #story .absolute.top-0.right-0 {
+      background: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    #story .bg-white\/5 {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 255, 255, 0.18) !important;
+    }
+
+    .section-photo-ribbon {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 1fr;
+      gap: 16px;
+      max-width: 1040px;
+      margin: 0 auto 56px;
+    }
+
+    .section-photo-ribbon figure {
+      min-height: 220px;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(221, 229, 223, 0.9);
+      box-shadow: 0 20px 48px rgba(22, 35, 50, 0.1);
+      background: #fff;
+    }
+
+    .section-photo-ribbon figure:nth-child(2) {
+      transform: translateY(24px);
+    }
+
+    .photo-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      min-height: 300px;
+      border: 1px solid rgba(221, 229, 223, 0.9);
+      box-shadow: 0 22px 56px rgba(22, 35, 50, 0.12);
+      background: #fff;
+    }
+
+    .photo-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 42, 55, 0.2), rgba(15, 42, 55, 0));
+      pointer-events: none;
+    }
+
+    .premium-card,
+    .bg-white.rounded-2xl,
+    .bg-white.rounded-3xl,
+    #faq-content .bg-white {
+      border: 1px solid rgba(221, 229, 223, 0.86) !important;
+      box-shadow: 0 18px 42px rgba(22, 35, 50, 0.075) !important;
+    }
+
+    #tutors .rounded-2xl {
+      background: #fff !important;
+      border-color: rgba(221, 229, 223, 0.9) !important;
+    }
+
+    #tutors .rounded-full {
+      background: var(--teal) !important;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), 0 12px 24px rgba(15, 118, 110, 0.18) !important;
+    }
+
+    #online .grid > div,
+    #coverage .grid > div,
+    #features .grid > div,
+    #guarantee .grid > div,
+    #flow .grid > div {
+      background: rgba(255, 255, 255, 0.9) !important;
+      border-color: rgba(221, 229, 223, 0.9) !important;
+    }
+
+    #management .absolute.top-0.left-0.w-full.h-2 {
+      background: var(--teal) !important;
+    }
+
+    #management .w-20.h-20,
+    #features .w-14,
+    #online .w-12,
+    #coverage .w-10,
+    #guarantee .w-14 {
+      background: var(--sage) !important;
+      color: var(--teal) !important;
+      box-shadow: none !important;
+    }
+
+    #cost .w-12 {
+      background: #fff0ed !important;
+      color: #a64035 !important;
+    }
+
+    #cost .border-t-4 {
+      border-top-color: #be5a4d !important;
+    }
+
+    #pricing .border-2.border-indigo-500 {
+      border-color: var(--teal) !important;
+      box-shadow: 0 28px 64px rgba(15, 118, 110, 0.16) !important;
+    }
+
+    input,
+    textarea,
+    select {
+      border-radius: 8px !important;
+      background: #fbfcfb !important;
+      border-color: var(--line) !important;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--teal) !important;
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12) !important;
+    }
+
+    @media (max-width: 1023px) {
+      .hero-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-photo-stack {
+        min-height: 360px;
+        margin-top: 24px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      header {
+        min-height: auto !important;
+        padding-top: 88px;
+      }
+
+      .hero-photo-stack {
+        min-height: 300px;
+      }
+
+      .hero-photo-main {
+        inset: 0 0 20% 0;
+      }
+
+      .hero-photo-sub {
+        width: 52%;
+        height: 30%;
+      }
+
+      .hero-photo-note {
+        width: 58%;
+        padding: 14px;
+      }
+
+      .section-photo-ribbon {
+        grid-template-columns: 1fr;
+        margin-bottom: 40px;
+      }
+
+      .section-photo-ribbon figure:nth-child(2) {
+        transform: none;
+      }
+
+      .section-photo-ribbon figure {
+        min-height: 190px;
+      }
+    }
   </style>
   <meta name="google-site-verification" content="yO7dyAtjjT4jLmT6vTMU3dfOjDaeCREzXRw8lQrm4tk" />
 </head>
@@ -30,19 +552,20 @@
     <div class="container mx-auto px-6 flex justify-between items-center">
       <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
         <div id="nav-logo" class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl bg-white text-indigo-900">
-          TD
+          医
         </div>
         <span id="nav-title" class="text-xl font-bold tracking-tight text-white">
-          大学受験・自走専門塾 Think Do!
+          医学部受験アシスト
         </span>
       </div>
 
-      <div class="hidden md:flex items-center space-x-8">
+      <div class="hidden md:flex items-center space-x-6">
         <button onclick="scrollToSection('concept')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">コンセプト</button>
-        <button onclick="scrollToSection('management')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">マネジメント</button>
-        <button onclick="scrollToSection('features')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">特徴</button>
-        <button onclick="scrollToSection('story')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">ストーリー</button>
+        <button onclick="scrollToSection('tutors')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">講師</button>
+        <button onclick="scrollToSection('coverage')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">対象</button>
         <button onclick="scrollToSection('pricing')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">料金</button>
+        <button onclick="scrollToSection('guarantee')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">特典</button>
+        <button onclick="scrollToSection('faq')" class="nav-link font-medium text-sm text-gray-200 hover:text-indigo-300 transition-colors">FAQ</button>
         <button onclick="scrollToSection('contact')" id="nav-cta" class="px-6 py-2 text-sm rounded-full font-bold bg-white text-indigo-700 hover:bg-gray-100 transition-all">
           無料相談はこちら
         </button>
@@ -56,10 +579,14 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 md:hidden flex-col space-y-4 border-t border-gray-100 animate-fade-in-down">
       <button onclick="scrollToSection('concept')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">コンセプト</button>
-      <button onclick="scrollToSection('management')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">マネジメント</button>
-      <button onclick="scrollToSection('features')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">特徴</button>
-      <button onclick="scrollToSection('story')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">ストーリー</button>
+      <button onclick="scrollToSection('cost')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">浪人コスト</button>
+      <button onclick="scrollToSection('tutors')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">講師</button>
+      <button onclick="scrollToSection('online')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">オンライン</button>
+      <button onclick="scrollToSection('coverage')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">対象範囲</button>
+      <button onclick="scrollToSection('story')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">代表メッセージ</button>
       <button onclick="scrollToSection('pricing')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">料金</button>
+      <button onclick="scrollToSection('guarantee')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">特典・保証</button>
+      <button onclick="scrollToSection('faq')" class="text-left py-3 text-gray-800 font-bold border-b border-gray-100 w-full">FAQ</button>
       <button onclick="scrollToSection('contact')" class="w-full mt-4 px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
         無料相談お申し込み
       </button>
@@ -69,49 +596,71 @@
   <!-- Hero Section -->
   <header class="relative min-h-screen flex items-center justify-center overflow-hidden pb-24">
     <div class="absolute inset-0 z-0">
-      <img 
-        src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
-        alt="Study Focus" 
+      <img
+        src="https://images.unsplash.com/photo-1513258496099-48168024aec0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=85"
+        alt="医学部受験に向けて学習する生徒"
         class="w-full h-full object-cover"
       />
       <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/95 via-blue-900/80 to-indigo-900/90"></div>
     </div>
 
     <div class="relative z-10 container mx-auto px-6 pt-20">
-      <div class="max-w-4xl">
-        <div class="inline-flex items-center gap-2 bg-indigo-800/50 backdrop-blur-sm border border-indigo-400/30 text-indigo-100 px-4 py-2 rounded-full mb-8 animate-fade-in-up">
-          <i class="fas fa-star text-yellow-400"></i>
-          <span class="text-sm font-medium tracking-wide">筑波大学医学類生によるコーチング</span>
-        </div>
-        
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-8 tracking-tight">
-          良い講師も、<br />
-          大量の演習も、<br />
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">
-            合否の決定打ではない。
-          </span>
-        </h1>
-        
-        <p class="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed max-w-2xl border-l-4 border-yellow-500 pl-6">
-          必要なのは、誰かに教わる時間ではなく、<br class="hidden md:block" />
-          <strong class="text-white">「自分で考える能力」</strong>を身につけること。<br />
-          戦略とモチベーションの徹底管理で、あなたの「自考力」を覚醒させます。
-        </p>
+      <div class="hero-layout">
+        <div class="max-w-4xl">
+          <div class="hero-badge inline-flex items-center gap-2 bg-indigo-800/50 backdrop-blur-sm border border-indigo-400/30 text-indigo-100 px-4 py-2 rounded-full mb-8 animate-fade-in-up">
+            <i class="fas fa-star text-yellow-400"></i>
+            <span class="text-sm font-medium tracking-wide">講師は全員、現役の医学生</span>
+          </div>
 
-        <div class="flex flex-col sm:flex-row gap-5">
-          <button onclick="scrollToSection('contact')" class="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg bg-yellow-400 text-indigo-900 hover:bg-yellow-300 shadow-yellow-400/20 mb-4 sm:mb-0">
-            無料受験相談へ進む
-          </button>
-          <button onclick="scrollToSection('concept')" class="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg bg-transparent text-white border-2 border-white/30 hover:bg-white/10 hover:border-white">
-            Think Do!について
-          </button>
+          <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-8 tracking-tight">
+            無理せず、最短で、<br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">
+              医学部に合格する。
+            </span>
+          </h1>
+
+          <p class="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed max-w-2xl border-l-4 border-yellow-500 pl-6">
+            1日12時間勉強しなくていい。やりたいことも我慢しなくていい。<br class="hidden md:block" />
+            <strong class="text-white">志望校に通う現役医学生</strong>の“リアルな思考”と、<br class="hidden md:block" />
+            <strong class="text-white">短時間スタート × 休息の質設計</strong>で、精神的にも安定したまま結果を出す。
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-5">
+            <button onclick="scrollToSection('contact')" class="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg bg-yellow-400 text-indigo-900 hover:bg-yellow-300 shadow-yellow-400/20 mb-4 sm:mb-0">
+              無料受験相談へ進む
+            </button>
+            <button onclick="scrollToSection('concept')" class="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg bg-transparent text-white border-2 border-white/30 hover:bg-white/10 hover:border-white">
+              サービスについて
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-photo-stack" aria-hidden="true">
+          <div class="hero-photo hero-photo-main">
+            <img
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=85"
+              alt=""
+            />
+          </div>
+          <div class="hero-photo hero-photo-sub">
+            <img
+              src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=85"
+              alt=""
+            />
+          </div>
+          <div class="hero-photo-note">
+            <span class="hero-note-dot"></span>
+            <span class="hero-note-line"></span>
+            <span class="hero-note-line"></span>
+            <span class="hero-note-line"></span>
+          </div>
         </div>
       </div>
     </div>
     
     <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white/50 animate-bounce">
       <div class="flex flex-col items-center gap-2">
-        <i class="fas fa-chevron-down"></i>
+        <i class="fas fa-chevron-down transition-transform"></i>
       </div>
     </div>
   </header>
@@ -123,24 +672,24 @@
         <div class="w-full md:w-1/2">
           <div class="text-center md:text-left mb-16">
             <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">OUR PHILOSOPHY</span>
-            <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">なぜ「自考力」なのか</h2>
+            <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">「努力不足」ではなく「やり方の問題」</h2>
             <div class="w-20 h-1.5 mx-auto md:mx-0 mt-6 rounded-full bg-indigo-600"></div>
           </div>
-          
+
           <div class="space-y-8">
             <div class="flex gap-4 opacity-80">
               <div class="mt-1"><i class="fas fa-times text-gray-500 text-xl"></i></div>
               <div>
-                <h4 class="text-lg font-bold text-gray-700 line-through decoration-gray-500">わかりやすい授業を受ける</h4>
-                <p class="text-gray-600 text-sm">「わかったつもり」になるだけで、本番では手が止まってしまう。</p>
+                <h4 class="text-lg font-bold text-gray-700 line-through decoration-gray-500">常に勉強しなきゃ、休んだら落ちる</h4>
+                <p class="text-gray-600 text-sm">罪悪感でメンタルが崩れ、集中力が落ち、結果的に勉強時間も減る悪循環に。</p>
               </div>
             </div>
-            
+
             <div class="flex gap-4 opacity-80">
               <div class="mt-1"><i class="fas fa-times text-gray-500 text-xl"></i></div>
               <div>
-                <h4 class="text-lg font-bold text-gray-700 line-through decoration-gray-500">ひたすら問題を解く</h4>
-                <p class="text-gray-600 text-sm">思考停止で数をこなしても、初見の問題には対応できない。</p>
+                <h4 class="text-lg font-bold text-gray-700 line-through decoration-gray-500">長時間＝偉い、という根性論</h4>
+                <p class="text-gray-600 text-sm">日本の教育に染みついた価値観のせいで、本来出せるはずの結果が出ていない。</p>
               </div>
             </div>
 
@@ -149,34 +698,118 @@
                 <i class="fas fa-check text-sm"></i>
               </div>
               <div>
-                <h4 class="text-xl font-bold text-indigo-900 mb-2">「なぜ？」を突き詰め、自分で解を導く</h4>
+                <h4 class="text-xl font-bold text-indigo-900 mb-2">しっかり休み、やりたいこともやる。それでも結果が出る。</h4>
                 <p class="text-indigo-800 leading-relaxed">
-                  受験勉強のゴールは、知識の暗記ではありません。<br />
-                  未知の問題に出会ったとき、手持ちの知識を組み合わせて<br />
-                  <strong class="text-indigo-900 bg-yellow-200 px-1">自力で正解への道を切り拓く「思考体力」</strong>をつけることです。
+                  医学部に合格しているのは、ずっと机に張り付いている人ではありません。<br />
+                  <strong class="text-indigo-900 bg-yellow-200 px-1">無理をしないから、継続できる</strong>。<br />
+                  気づいたら周りより成績が伸びている。そんな状態を“設計”します。
                 </p>
               </div>
             </div>
           </div>
 
           <p class="mt-10 text-gray-600 leading-relaxed">
-            Think Do! は、単に勉強を教える場所ではありません。<br />
-            医学部合格者が実践してきた<strong>「思考のプロセス」</strong>そのものをインストールし、
-            あなたが一人でも戦えるようになるための「自立」を支援します。
+            あなたが今うまくいっていないのは、努力が足りないからではありません。<br />
+            <strong>やり方が間違っているだけ</strong>。私たちは、合格者が“当たり前にやっている思考法”を
+            そのままインストールし、最短で結果を出す環境を提供します。
           </p>
         </div>
-        
+
         <div class="w-full md:w-1/2 relative">
-          <div class="absolute inset-0 bg-gradient-to-tr from-indigo-600 to-blue-400 rounded-2xl transform rotate-3 opacity-20"></div>
-          <img 
-            src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
-            alt="Student thinking deeply" 
-            class="relative rounded-2xl shadow-2xl w-full object-cover h-[500px]"
-          />
-          <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl max-w-xs border border-gray-100">
-            <p class="text-indigo-900 font-bold text-lg mb-1">"答え"ではなく</p>
-            <p class="text-gray-600 text-sm">"答えへの辿り着き方"を学ぶ。</p>
+          <div class="photo-panel h-[500px]">
+            <img
+              src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=85"
+              alt="学習計画を相談する生徒"
+              class="w-full h-full object-cover"
+            />
           </div>
+          <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl max-w-xs border border-gray-100">
+            <p class="text-indigo-900 font-bold text-lg mb-1">根性論ではなく</p>
+            <p class="text-gray-600 text-sm">"科学的に勝つ設計"を学ぶ。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cost of Failure Section -->
+  <section id="cost" class="py-24 bg-gradient-to-b from-white to-red-50/60 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30 pointer-events-none">
+      <div class="absolute top-20 -left-24 w-72 h-72 bg-red-200 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-10 -right-24 w-72 h-72 bg-orange-200 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="text-center mb-16 px-4">
+        <span class="font-bold tracking-widest uppercase text-sm text-red-600">THE REAL COST</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">「もう1年あれば…」が、本当はいちばん高い。</h2>
+        <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-red-600"></div>
+        <p class="text-gray-700 mt-6 max-w-2xl mx-auto leading-relaxed">
+          受験で本当に怖いのは、「不合格そのもの」ではありません。<br/>
+          <strong class="text-red-700">不合格 → もう1年</strong> が積み上げる、見えにくいコストです。
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-red-500 flex flex-col">
+          <div class="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center mb-4">
+            <i class="fas fa-yen-sign text-xl"></i>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">直接費用</h3>
+          <p class="text-3xl font-extrabold text-red-600 mb-1">150〜350<span class="text-base">万円</span></p>
+          <p class="text-xs text-gray-500 mb-3">/ 浪人 1 年あたり</p>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            予備校学費・教材費・模試・夏期/冬期講習に加え、寮利用なら生活費。「もう1年」は家計に重くのしかかります。
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-orange-500 flex flex-col">
+          <div class="w-12 h-12 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center mb-4">
+            <i class="fas fa-hourglass-half text-xl"></i>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">機会損失</h3>
+          <p class="text-3xl font-extrabold text-orange-600 mb-1">−1<span class="text-base">年</span></p>
+          <p class="text-xs text-gray-500 mb-3">/ キャリアの開始</p>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            医師としてのキャリアが1年遅れる。同期との人間関係・臨床経験・専門医取得まで、その遅れはずっと尾を引きます。
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-rose-500 flex flex-col">
+          <div class="w-12 h-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mb-4">
+            <i class="fas fa-heart-crack text-xl"></i>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">自信の崩壊</h3>
+          <p class="text-3xl font-extrabold text-rose-600 mb-1">−−−</p>
+          <p class="text-xs text-gray-500 mb-3">/ 取り戻しにくい心理コスト</p>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            「自分は出来ない側の人間かもしれない」という感覚は、勉強時間を奪い、メンタルを長期的に削ります。
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-pink-500 flex flex-col">
+          <div class="w-12 h-12 rounded-full bg-pink-50 text-pink-600 flex items-center justify-center mb-4">
+            <i class="fas fa-house-crack text-xl"></i>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">家族関係の悪化</h3>
+          <p class="text-3xl font-extrabold text-pink-600 mb-1">…</p>
+          <p class="text-xs text-gray-500 mb-3">/ 数字に出ない最大のコスト</p>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            お互いの不安と焦りが衝突し、家庭内がギスギスする。受験期だけでなく合格後にも影を残しやすいリスクです。
+          </p>
+        </div>
+      </div>
+
+      <div class="max-w-3xl mx-auto mt-12 bg-white p-6 md:p-8 rounded-2xl border border-red-100 shadow-lg">
+        <p class="text-gray-700 leading-relaxed text-center">
+          いま <strong class="text-red-700">月数万円のサポート費用</strong> で「やり方」を変えるか、<br/>
+          1年後に <strong class="text-red-700">150〜350万円＋失う1年</strong> を払うか。<br/>
+          ——本当のリスクは、行動を遅らせる方にあります。
+        </p>
+        <div class="text-center mt-6">
+          <button onclick="scrollToSection('contact')" class="px-8 py-3 rounded-full font-bold text-sm bg-gradient-to-r from-red-600 to-rose-600 text-white hover:shadow-red-500/30 shadow-lg transition-all">
+            無料相談で「今のままで届くか」を診断する
+          </button>
         </div>
       </div>
     </div>
@@ -186,70 +819,82 @@
   <section id="management" class="py-24 bg-gray-50">
     <div class="container mx-auto px-6">
       <div class="text-center mb-16 px-4">
-        <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">STRATEGY & MOTIVATION</span>
-        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">合格を支える2つのマネジメント</h2>
+        <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">OUR APPROACH</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">医学部合格を支える2つの軸</h2>
         <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
       </div>
       <div class="text-center max-w-2xl mx-auto mb-16 text-gray-600">
-        独学を成功させるために必要なのは、<br/>
-        「正しい努力の方向」と「モチベーションの維持」です。<br/>
-        Think Do!はこの2つを徹底的に管理します。
+        ただ勉強を教える家庭教師ではありません。<br/>
+        <strong>「志望校に通う現役医学生」</strong>のリアルな思考と、<br/>
+        <strong>「短時間スタート × 休息の質を上げる学習設計」</strong>を掛け合わせ、無理なく最短で結果を出します。
+      </div>
+
+      <div class="section-photo-ribbon" aria-hidden="true">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=85" alt="" />
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=85" alt="" />
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1581093458791-9d42cc0300c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=85" alt="" />
+        </figure>
       </div>
 
       <div class="grid md:grid-cols-2 gap-8 md:gap-12">
-        <!-- Strategy Card -->
+        <!-- Mentor Card -->
         <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 flex flex-col items-center text-center relative overflow-hidden group">
           <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
           <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-8 text-blue-600 group-hover:scale-110 transition-transform duration-300">
-            <i class="fas fa-compass text-4xl"></i>
+            <i class="fas fa-user-graduate text-4xl"></i>
           </div>
-          <h3 class="text-2xl font-bold text-gray-900 mb-4">目標からの逆算戦略</h3>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">志望校に通う現役医学生が直接指導</h3>
           <p class="text-gray-600 leading-relaxed mb-6">
-            「今日は何を勉強すればいいんだろう？」<br/>
-            そんな迷いは、時間の最大の無駄です。<br/>
-            <strong class="text-indigo-900">志望校合格というゴールから逆算</strong>し、年間・月間・週間、そして「今日やるべきこと」まで完全に可視化します。
+            講師は全員、現役の医学生。<br/>
+            しかも<strong class="text-indigo-900">あなたの志望校に通い、実際にその試験を突破した人</strong>が担当します。<br/>
+            合格者の“リアルな思考”をそのままインストールできます。
           </p>
           <ul class="text-left w-full max-w-xs mx-auto space-y-3 bg-gray-50 p-6 rounded-xl">
             <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
               <i class="fas fa-check-circle text-blue-500"></i>
-              志望校レベルと現状のギャップ分析
+              合格者が実際に使った戦略を共有
             </li>
             <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
               <i class="fas fa-check-circle text-blue-500"></i>
-              無理なく無駄のないカリキュラム作成
+              本番で通用するメンタルの作り方
             </li>
             <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
               <i class="fas fa-check-circle text-blue-500"></i>
-              日々の修正で計画倒れを防ぐ
+              志望校別の出題傾向に基づく対策
             </li>
           </ul>
         </div>
 
-        <!-- Motivation Card -->
+        <!-- Recovery Design Card -->
         <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 flex flex-col items-center text-center relative overflow-hidden group">
           <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-500 to-red-500"></div>
           <div class="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mb-8 text-pink-500 group-hover:scale-110 transition-transform duration-300">
-            <i class="fas fa-heart text-4xl"></i>
+            <i class="fas fa-mug-saucer text-4xl"></i>
           </div>
-          <h3 class="text-2xl font-bold text-gray-900 mb-4">モチベーション伴走</h3>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">短時間スタート × 休息の質を上げる設計</h3>
           <p class="text-gray-600 leading-relaxed mb-6">
-            独学の最大の敵は「孤独」と「不安」です。<br/>
-            「このままで本当に受かるのか？」という不安を、<br/>
-            定期的な面談と日々のコミュニケーションで解消。<br/>
-            <strong class="text-indigo-900">あなたの心の火を絶やさないよう支えます。</strong>
+            医学部志望者は「長時間勉強しないと受からない」というプレッシャーに常に晒されます。<br/>
+            でも、<strong class="text-indigo-900">最初から長時間は必要ありません</strong>。<br/>
+            今の自分が続けられる時間からスタートし、質の高い休息を挟みながら、徐々に勉強時間を伸ばす。<br/>
+            この“積み上げ方の設計”こそが、合格まで走り切る最短ルートです。
           </p>
           <ul class="text-left w-full max-w-xs mx-auto space-y-3 bg-gray-50 p-6 rounded-xl">
             <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
               <i class="fas fa-check-circle text-pink-500"></i>
-              24時間LINE相談で不安を即解消
+              今の勉強量を起点にした無理ない計画
             </li>
             <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
               <i class="fas fa-check-circle text-pink-500"></i>
-              スランプ時のメンタルケア
+              「休み方の質」まで具体的に設計
             </li>
             <li class="flex items-center gap-3 text-sm font-bold text-gray-700">
               <i class="fas fa-check-circle text-pink-500"></i>
-              得意なことを見つけ自身をつける
+              段階的に勉強時間を伸ばす積み上げ式
             </li>
           </ul>
         </div>
@@ -257,40 +902,354 @@
     </div>
   </section>
 
+  <!-- Tutors Section -->
+  <section id="tutors" class="py-24 bg-white border-t border-gray-100">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-12 px-4">
+        <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">TUTORS</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">在籍中の現役医学生講師</h2>
+        <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
+        <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
+          関東圏の様々な医学部に在籍する現役医学生が、志望校に合わせて担当します。<br/>
+          あなたと同じ大学に通う合格者から、リアルな思考をそのまま受け取れる環境です。
+        </p>
+      </div>
+    </div>
+
+    <div class="relative overflow-hidden marquee-fade-mask">
+      <div class="marquee-track flex gap-6 px-6">
+        <!-- Group 1 -->
+        <div class="flex gap-6 shrink-0">
+          <!-- Tutor cards (samples) -->
+          <div class="w-56 shrink-0 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl p-5 border border-indigo-100 shadow-sm float-soft">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">K.S</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">筑波大学 医学類</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M3 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-pink-50 to-red-50 rounded-2xl p-5 border border-pink-100 shadow-sm float-soft" style="animation-delay: 0.4s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-red-400 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">H.A</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">慶應義塾大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M2 / 女性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-5 border border-amber-100 shadow-sm float-soft" style="animation-delay: 0.8s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">T.M</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">千葉大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M4 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-5 border border-emerald-100 shadow-sm float-soft" style="animation-delay: 1.2s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">Y.N</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">順天堂大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M3 / 女性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-5 border border-violet-100 shadow-sm float-soft" style="animation-delay: 0.2s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">R.K</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">東京医科歯科大学</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M5 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-sky-50 to-blue-50 rounded-2xl p-5 border border-sky-100 shadow-sm float-soft" style="animation-delay: 0.6s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">S.O</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">横浜市立大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M2 / 女性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-5 border border-rose-100 shadow-sm float-soft" style="animation-delay: 1.0s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">K.T</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">日本医科大学</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M4 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-teal-50 to-cyan-50 rounded-2xl p-5 border border-teal-100 shadow-sm float-soft" style="animation-delay: 0.3s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">M.I</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">東京慈恵会医科大学</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M3 / 女性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-fuchsia-50 to-pink-50 rounded-2xl p-5 border border-fuchsia-100 shadow-sm float-soft" style="animation-delay: 0.7s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-fuchsia-400 to-pink-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">D.H</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">東邦大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M2 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-5 border border-orange-100 shadow-sm float-soft" style="animation-delay: 1.1s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">A.W</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">杏林大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M5 / 女性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-lime-50 to-green-50 rounded-2xl p-5 border border-lime-100 shadow-sm float-soft" style="animation-delay: 0.5s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-lime-500 to-green-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">N.F</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">北里大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M3 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-5 border border-indigo-100 shadow-sm float-soft" style="animation-delay: 0.9s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">E.S</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">東京医科大学</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M4 / 女性</p>
+          </div>
+        </div>
+        <!-- Group 2 (duplicate for seamless loop) -->
+        <div class="flex gap-6 shrink-0" aria-hidden="true">
+          <div class="w-56 shrink-0 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl p-5 border border-indigo-100 shadow-sm float-soft">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">K.S</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">筑波大学 医学類</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M3 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-pink-50 to-red-50 rounded-2xl p-5 border border-pink-100 shadow-sm float-soft" style="animation-delay: 0.4s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-red-400 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">H.A</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">慶應義塾大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M2 / 女性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-5 border border-amber-100 shadow-sm float-soft" style="animation-delay: 0.8s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">T.M</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">千葉大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M4 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-5 border border-emerald-100 shadow-sm float-soft" style="animation-delay: 1.2s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">Y.N</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">順天堂大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M3 / 女性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-5 border border-violet-100 shadow-sm float-soft" style="animation-delay: 0.2s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">R.K</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">東京医科歯科大学</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M5 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-sky-50 to-blue-50 rounded-2xl p-5 border border-sky-100 shadow-sm float-soft" style="animation-delay: 0.6s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">S.O</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">横浜市立大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M2 / 女性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-5 border border-rose-100 shadow-sm float-soft" style="animation-delay: 1.0s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">K.T</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">日本医科大学</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M4 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-teal-50 to-cyan-50 rounded-2xl p-5 border border-teal-100 shadow-sm float-soft" style="animation-delay: 0.3s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">M.I</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">東京慈恵会医科大学</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M3 / 女性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-fuchsia-50 to-pink-50 rounded-2xl p-5 border border-fuchsia-100 shadow-sm float-soft" style="animation-delay: 0.7s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-fuchsia-400 to-pink-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">D.H</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">東邦大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M2 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-5 border border-orange-100 shadow-sm float-soft" style="animation-delay: 1.1s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">A.W</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">杏林大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M5 / 女性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-lime-50 to-green-50 rounded-2xl p-5 border border-lime-100 shadow-sm float-soft" style="animation-delay: 0.5s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-lime-500 to-green-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">N.F</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">北里大学 医学部</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M3 / 男性</p>
+          </div>
+          <div class="w-56 shrink-0 bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-5 border border-indigo-100 shadow-sm float-soft" style="animation-delay: 0.9s">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center text-white font-bold text-lg mx-auto shadow-md">E.S</div>
+            <p class="text-center font-bold text-gray-900 mt-3 text-sm">東京医科大学</p>
+            <p class="text-center text-xs text-gray-500 mt-1">M4 / 女性</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-6">
+      <p class="text-center text-xs text-gray-400 mt-10 max-w-2xl mx-auto leading-relaxed">
+        ※ 表示はプライバシー保護のためイニシャル表記です。学年・在籍大学は実在の在籍講師から抜粋しています。<br/>
+        ご希望の志望校・学習スタイルをもとに、最適な講師を完全マッチングでご案内します。
+      </p>
+    </div>
+  </section>
+
   <!-- Features Section -->
-  <section id="features" class="py-24 bg-white">
+  <section id="features" class="py-24 bg-gray-50">
     <div class="container mx-auto px-6">
       <div class="text-center mb-16 px-4">
         <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">THE METHOD</span>
-        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">筑波大学医学類生による思考アプローチ</h2>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">合格者が当たり前にやっている3つのこと</h2>
         <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
       </div>
-      
+
       <div class="grid md:grid-cols-3 gap-8">
         <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col">
           <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center mb-6 text-indigo-600">
-            <i class="fas fa-brain text-2xl"></i>
+            <i class="fas fa-calendar-check text-2xl"></i>
           </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-4">思考プロセスの言語化</h3>
-          <p class="text-gray-600 leading-relaxed text-sm flex-grow">講師は筑波大学医学類生。「なぜその解法を選んだのか」「どこに着眼したのか」という頭の中のプロセスを講師が言語化して伝えます。単なる解法の暗記ではなく、初見問題に応用が効く思考回路を作ります。</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">合格者の“実物”スケジュール</h3>
+          <p class="text-gray-600 leading-relaxed text-sm flex-grow">講師が実際に医学部合格までに使っていた週間・月間スケジュールをテンプレ化。難しいことは一切なし、テンプレ通りに動くだけで再現できる形に落とし込んでいます。</p>
         </div>
-        
+
         <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col">
           <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center mb-6 text-indigo-600">
-            <i class="fas fa-bullseye text-2xl"></i>
+            <i class="fas fa-mug-hot text-2xl"></i>
           </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-4">メタ認知能力の育成</h3>
-          <p class="text-gray-600 leading-relaxed text-sm flex-grow">計画を立てるプロセス自体を共有し、「自分は今どこにいて、何が足りないか」を客観視する力（メタ認知）を養います。これは大学以降も役立つ一生モノのスキルです。</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">罪悪感ゼロの「休み方ルール」</h3>
+          <p class="text-gray-600 leading-relaxed text-sm flex-grow">週に数回のリフレッシュ時間、好きなことを続けながら勉強する設計、休んでも崩れないリズム作り。合格者が必ず守っていた“休み方”そのものを共有します。</p>
         </div>
-        
+
         <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col">
           <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center mb-6 text-indigo-600">
-            <i class="fas fa-lightbulb text-2xl"></i>
+            <i class="fas fa-bolt text-2xl"></i>
           </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-4">自走するための技術</h3>
-          <p class="text-gray-600 leading-relaxed text-sm flex-grow">周りに塾がない環境でも勝てる理由は、自分で自分を律する力があるから。集中力を高める環境作りや、時間の使い方など、独学で現役合格した先輩だからこそ知る「自走術」を伝授します。</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">効率を最大化する勉強法</h3>
+          <p class="text-gray-600 leading-relaxed text-sm flex-grow">同じ時間でも、結果はやり方で変わります。教材選定・順番・1問への向き合い方まで、合格者の“設計図”を個別最適化。センスではなく設計で点数を伸ばします。</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Online Benefits Section -->
+  <section id="online" class="py-24 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 px-4">
+        <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">ONLINE</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">完全オンラインだから、強い。</h2>
+        <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
+        <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
+          指導は <strong class="text-indigo-700">Zoom / Google Meet</strong> で実施。<br/>
+          スマートフォンかPCがあれば、初日からそのまま始められます。
+        </p>
+      </div>
+
+      <div class="section-photo-ribbon" aria-hidden="true">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1596496181871-9681eacf9764?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=85" alt="" />
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=85" alt="" />
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=85" alt="" />
+        </figure>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div class="bg-gradient-to-br from-indigo-50 to-blue-50 p-6 rounded-2xl border border-indigo-100">
+          <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center mb-4">
+            <i class="fas fa-map-marked-alt"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">全国どこからでも受講可</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">都市部の合格者と地方の受験生を、地理ハンデなしで直接つなぎます。</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-pink-50 to-red-50 p-6 rounded-2xl border border-pink-100">
+          <div class="w-12 h-12 rounded-xl bg-pink-500 text-white flex items-center justify-center mb-4">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">移動時間 ゼロ</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">通塾の片道30〜60分を、そのまま勉強・休息・睡眠に回せます。</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-emerald-50 to-green-50 p-6 rounded-2xl border border-emerald-100">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500 text-white flex items-center justify-center mb-4">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">録画で何度でも反復</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">面談・解説は録画として残るので、わからなかった部分を後から繰り返し確認できます。</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-amber-50 to-yellow-50 p-6 rounded-2xl border border-amber-100">
+          <div class="w-12 h-12 rounded-xl bg-amber-500 text-white flex items-center justify-center mb-4">
+            <i class="fas fa-people-roof"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">保護者も様子を確認できる</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">録画・週次サマリにより、保護者の方も「何をやっているか」を把握できます。</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-violet-50 to-purple-50 p-6 rounded-2xl border border-violet-100">
+          <div class="w-12 h-12 rounded-xl bg-violet-500 text-white flex items-center justify-center mb-4">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">気になる志望校の講師にすぐ接続</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">「○○大の合格者に聞きたい」をオンラインで即マッチング。物理距離がボトルネックになりません。</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-sky-50 to-cyan-50 p-6 rounded-2xl border border-sky-100">
+          <div class="w-12 h-12 rounded-xl bg-sky-500 text-white flex items-center justify-center mb-4">
+            <i class="fas fa-mobile-screen"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">スマホ1台で最低限OK</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">専用ソフトや高価な機材は不要。お手持ちのスマホ・PCですぐ始められます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coverage Section -->
+  <section id="coverage" class="py-24 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 px-4">
+        <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">COVERAGE</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">対象者・対応範囲</h2>
+        <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
+        <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
+          学年・偏差値・志望校形態・科目を問わず、医学部志望のすべての方を対象としています。
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900">対象学年</h3>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-700">
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>高校1年生</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>高校2年生</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>高校3年生</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>既卒生(浪人)</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>再受験生</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-pink-100 text-pink-600 flex items-center justify-center">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900">対応偏差値帯</h3>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-700">
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>基礎レベル(40台〜)から対応</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>中堅医学部志望</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>難関医学部志望(東大・京大・慶應 等)</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>「今は届きそうにない」状態からの逆転も歓迎</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center">
+              <i class="fas fa-school"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900">対応する志望校形態</h3>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-700">
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>国公立医学部(旧帝・地方国公立すべて)</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>私立医学部(慶應・慈恵・順天堂 ほか全校)</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>東京医科歯科大学 等の単科医大</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>学校推薦型・総合型選抜にも対応</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>地域枠・共通テスト利用 等の特殊枠も相談可</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900">対応科目</h3>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-700">
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>英語 / 数学(IAIIB・III)</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>物理 / 化学 / 生物</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>国語(共通テスト対策含む)</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>小論文・面接・志望理由書</li>
+            <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>全科目をまとめて一気通貫で設計</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="text-center text-xs text-gray-500 mt-10 max-w-2xl mx-auto">
+        ※ ご自身のケースが対応可能か不安な方も、まずは無料相談でお気軽にご確認ください。
+      </p>
     </div>
   </section>
 
@@ -306,30 +1265,58 @@
       </div>
       
       <div class="max-w-4xl mx-auto bg-white/5 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/10">
-        <div class="flex flex-col gap-10 items-start">
+        <div class="flex flex-col md:flex-row gap-10 items-start">
+          <!-- Profile Card -->
+          <div class="w-full md:w-64 shrink-0 flex flex-col items-center text-center">
+            <div class="w-32 h-32 rounded-full bg-indigo-700 border-4 border-indigo-400/50 flex items-center justify-center mb-4 overflow-hidden">
+              <!-- 写真がある場合は <img src="..." class="w-full h-full object-cover" /> に差し替え -->
+              <i class="fas fa-user text-4xl text-indigo-300"></i>
+            </div>
+            <p class="text-white font-bold text-lg">鈴木 海聖</p>
+            <p class="text-indigo-300 text-sm mt-1">代表 / 医学部専門コーチ</p>
+            <div class="mt-4 space-y-2 text-xs text-indigo-200 text-left w-full">
+              <div class="flex items-center gap-2">
+                <i class="fas fa-graduation-cap text-yellow-400 w-4"></i>
+                <span>筑波大学 医学類 在学中</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fas fa-mug-saucer text-yellow-400 w-4"></i>
+                <span>「休息の質」を起点にした学習設計</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fas fa-book text-yellow-400 w-4"></i>
+                <span>地方公立高校から塾なしで医学部合格</span>
+              </div>
+            </div>
+          </div>
+
           <div class="w-full space-y-6 text-indigo-50 leading-relaxed">
             <h3 class="text-2xl font-bold text-white mb-4">
-              「周りに何もない」が、<br />
-              最強の武器になった。
+              努力不足ではない。<br />
+              “やり方”が間違っているだけ。
             </h3>
             <p>
-              田舎に住んでいた私は、塾に行くという選択肢がありませんでした。<br />
-              最初は不安でしたが、今思えばそれが最大の幸運でした。
+              医学部受験アシストを運営している、医学部専門家庭教師の鈴木海聖です。<br />
+              私たちのサービスは少し特殊で、<span class="text-yellow-400 font-bold">講師は全員、現役の医学生</span>。
+              しかも、あなたの志望校に通い、実際にその試験を突破した人が直接教えます。
             </p>
             <p>
-              誰かに教えてもらえないからこそ、<br />
-              <span class="text-yellow-400 font-bold">「教科書をどう読めば理解できるか」「なぜこの答えになるのか」</span>
-              を、脳がちぎれるほど自分で考え抜くしかなかったのです。
+              ただ勉強を教えるだけではありません。<br />
+              <span class="text-yellow-400 font-bold">どう考えていたのか／どんな戦略で合格したのか／どんなメンタルで乗り越えたのか</span>。
+              合格者の“リアルな思考”を、そのままインストールします。
             </p>
             <p>
-              その過程で身につけたのは、目標から逆算して計画を立てる<strong class="text-white">「戦略性」</strong>と、自分自身を鼓舞し続ける<strong class="text-white">「メンタル管理」</strong>でした。
+              さらにもう一つの大きな特徴が、<strong class="text-white">「短時間スタート × 休息の質」の学習設計</strong>です。
+              いきなり長時間を目標にせず、今のあなたが続けられる時間から始める。質の高い休息を挟みながら、徐々に勉強量を引き上げる——
+              この積み上げ方こそが、最後まで走り切る一番のコツです。
             </p>
             <p>
-              大学に入ってからも、社会に出てからも、本当に役立つのは「誰かに教わった知識」ではなく「自分で答えを導き出す力」です。<br />
-              私たちが教えたいのは、受験のその先でも使える、本質的な強さです。
+              「常に勉強しないと落ちる」という思い込みから抜け出し、<br />
+              休む時は休み、やりたいこともやり、それでも結果を出す。<br />
+              それが、医学部受験アシストの考える“合格の作り方”です。
             </p>
             <div class="pt-4">
-              <p class="font-handwriting text-2xl text-yellow-400 rotate-2 inline-block transform">Think, then Do.</p>
+              <p class="font-handwriting text-2xl text-yellow-400 rotate-2 inline-block transform">Design, not Guts.</p>
             </div>
           </div>
         </div>
@@ -340,10 +1327,36 @@
   <!-- Pricing Section -->
   <section id="pricing" class="py-24 bg-gray-50">
     <div class="container mx-auto px-6">
-      <div class="text-center mb-16 px-4">
+      <div class="text-center mb-12 px-4">
         <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">PLAN</span>
         <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">コース・料金</h2>
         <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
+      </div>
+
+      <!-- Campaign Banner -->
+      <div class="max-w-5xl mx-auto mb-12 bg-gradient-to-r from-yellow-50 via-amber-50 to-yellow-50 border-2 border-amber-300 rounded-2xl p-6 md:p-8 shadow-md">
+        <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-lg shrink-0">
+              <i class="fas fa-fire text-2xl"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-amber-700 tracking-widest">期間限定キャンペーン</p>
+              <p class="text-xl md:text-2xl font-extrabold text-gray-900 mt-1">
+                ご相談から <span class="text-amber-600">30日以内のお申込み</span>で<br class="md:hidden"/>
+                <span class="text-amber-600">初月50%OFF + 入会金無料</span>
+              </p>
+            </div>
+          </div>
+          <div class="text-right md:text-left shrink-0">
+            <p class="text-xs text-gray-500">適用条件</p>
+            <ul class="text-sm text-gray-700 mt-1 space-y-1">
+              <li><i class="fas fa-check text-emerald-500 mr-1"></i>全プラン対象</li>
+              <li><i class="fas fa-check text-emerald-500 mr-1"></i>無料相談後 30日以内</li>
+              <li><i class="fas fa-check text-emerald-500 mr-1"></i>毎月先着 5名様限定</li>
+            </ul>
+          </div>
+        </div>
       </div>
       
       <div class="max-w-7xl mx-auto grid lg:grid-cols-3 gap-8 items-stretch">
@@ -351,43 +1364,50 @@
         <!-- Light Plan -->
         <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all order-2 lg:order-1 relative flex flex-col h-full">
           <div class="mb-6">
-            <div class="inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold mb-3">お試し・自律学習向け</div>
-            <h3 class="text-xl font-bold text-gray-900">ライト戦略コース</h3>
-            <p class="text-gray-500 text-xs mt-2">プロに「年間の地図」を作って欲しい方へ。<br/>自習習慣がある方向けのエントリープラン。</p>
+            <div class="inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold mb-3">お試し・自走できる方向け</div>
+            <h3 class="text-xl font-bold text-gray-900">ライト設計コース</h3>
+            <p class="text-gray-500 text-xs mt-2">現役医学生に「合格までの地図」を引いて欲しい方へ。<br/>自習習慣がある方向けのエントリープラン。</p>
           </div>
           <div class="flex items-baseline mb-6">
             <span class="text-3xl font-extrabold text-gray-900">14,800</span>
             <span class="text-xs text-gray-500 ml-2">円 / 月 (税込)</span>
           </div>
-          
+
           <div class="space-y-3 mb-8 flex-grow">
             <div class="flex items-start gap-3">
               <i class="fas fa-compass text-blue-500 mt-1"></i>
               <div>
                 <span class="font-bold text-sm text-gray-800">月1回 戦略面談 (30分)</span>
-                <p class="text-[10px] text-gray-500">現状確認と翌1ヶ月の戦略すり合わせ</p>
+                <p class="text-[10px] text-gray-500">志望校までのルート確認と翌1ヶ月の調整</p>
               </div>
             </div>
             <div class="flex items-start gap-3">
               <i class="fas fa-map text-blue-500 mt-1"></i>
               <div>
-                <span class="font-bold text-sm text-gray-800">月次・週間 カリキュラム作成</span>
-                <p class="text-[10px] text-gray-500">どの教材をどの順番で進めるかを設計</p>
+                <span class="font-bold text-sm text-gray-800">月次・週間カリキュラム作成</span>
+                <p class="text-[10px] text-gray-500">合格者のテンプレを個別最適化して設計</p>
               </div>
             </div>
             <div class="flex items-start gap-3">
               <i class="fas fa-book-open text-blue-500 mt-1"></i>
               <div>
                 <span class="font-bold text-sm text-gray-800">教材選定アドバイス</span>
-                <p class="text-[10px] text-gray-500">レベルに合わせた最適ルートを提案</p>
+                <p class="text-[10px] text-gray-500">志望校レベルに合わせた最短ルートを提案</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-file-lines text-blue-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-sm text-gray-800">月次 学習レポート</span>
+                <p class="text-[10px] text-gray-500">保護者の方にもメールでお送りします</p>
               </div>
             </div>
             <div class="flex items-start gap-3 opacity-50">
               <i class="fas fa-times text-gray-400 mt-1"></i>
-              <span class="text-xs text-gray-500 line-through">LINE質問相談・週次面談</span>
+              <span class="text-xs text-gray-500 line-through">日常的な質問相談・週次面談</span>
             </div>
           </div>
-          
+
           <button onclick="scrollToSection('contact')" class="w-full py-3 text-sm rounded-full font-bold bg-white text-indigo-800 border-2 border-indigo-100 hover:bg-indigo-50 hover:border-indigo-300 transition-all">
             まずは相談する
           </button>
@@ -399,34 +1419,34 @@
             人気No.1
           </div>
           <div class="mb-6">
-            <h3 class="text-2xl font-bold text-indigo-900">自考力養成コース</h3>
-            <p class="text-gray-500 text-sm mt-2">学習管理＋思考コーチング＋メンタル伴走。<br/>迷わず走り続けるためのスタンダードプラン。</p>
+            <h3 class="text-2xl font-bold text-indigo-900">スタンダード合格コース</h3>
+            <p class="text-gray-500 text-sm mt-2">学習設計＋思考コーチング＋産業医的スケジュール管理。<br/>迷わず走り続けるためのメインプラン。</p>
           </div>
           <div class="flex items-baseline mb-8">
             <span class="text-4xl font-extrabold text-indigo-600">29,800</span>
             <span class="text-sm text-gray-500 ml-2">円 / 月 (税込)</span>
           </div>
-          
+
           <div class="space-y-4 mb-8 flex-grow">
             <div class="flex items-start gap-3">
               <i class="fas fa-check-circle text-indigo-600 mt-1"></i>
               <div>
                 <span class="font-bold text-gray-800">週間学習計画の作成</span>
-                <p class="text-xs text-gray-500">ゴールから逆算し、今週やるべきことを明確化</p>
+                <p class="text-xs text-gray-500">志望校から逆算し、今週やるべきことを明確化</p>
               </div>
             </div>
             <div class="flex items-start gap-3">
-              <i class="fas fa-brain text-indigo-600 mt-1"></i>
+              <i class="fas fa-user-graduate text-indigo-600 mt-1"></i>
               <div>
-                <span class="font-bold text-gray-800">週1回 思考コーチング面談 (30分)</span>
-                <p class="text-xs text-gray-500">「考え方」を指導し、メタ認知能力を育成</p>
+                <span class="font-bold text-gray-800">週1回 現役医学生面談 (30分)</span>
+                <p class="text-xs text-gray-500">合格者の思考プロセスをそのまま共有</p>
               </div>
             </div>
             <div class="flex items-start gap-3">
               <i class="fas fa-heart text-pink-500 mt-1"></i>
               <div>
-                <span class="font-bold text-gray-800">LINE質問・相談し放題</span>
-                <p class="text-xs text-gray-500">勉強内容に加え、メンタル相談も24時間歓迎</p>
+                <span class="font-bold text-gray-800">質問・相談し放題</span>
+                <p class="text-xs text-gray-500">勉強内容に加え、休み方やメンタル相談も歓迎</p>
               </div>
             </div>
             <div class="flex items-start gap-3">
@@ -435,8 +1455,22 @@
                 <span class="font-bold text-gray-800">教材選定・切り替え提案</span>
               </div>
             </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-people-roof text-indigo-600 mt-1"></i>
+              <div>
+                <span class="font-bold text-gray-800">月次 保護者レポート</span>
+                <p class="text-xs text-gray-500">希望者には月1回の保護者面談もご用意</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-tags text-amber-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-gray-800">早割対象 (初月50%OFF)</span>
+                <p class="text-xs text-gray-500">無料相談から30日以内のお申込みで適用</p>
+              </div>
+            </div>
           </div>
-          
+
           <button onclick="scrollToSection('contact')" class="w-full py-4 text-lg rounded-full font-bold bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:shadow-indigo-500/30 shadow-lg transition-all">
             詳しく見る
           </button>
@@ -447,14 +1481,14 @@
           <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-t-2xl"></div>
           <div class="mb-6 mt-2">
             <div class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold mb-3">毎月5名限定</div>
-            <h3 class="text-xl font-bold text-gray-900">徹底マネジメントコース</h3>
-            <p class="text-gray-500 text-xs mt-2">医学部・難関大志望向け。<br/>日次管理と添削で合格へ導くフルサポート。</p>
+            <h3 class="text-xl font-bold text-gray-900">医学部直結フルサポートコース</h3>
+            <p class="text-gray-500 text-xs mt-2">本気で最短合格を狙う方へ。<br/>日次管理＋志望校別添削までのフルサポート。</p>
           </div>
           <div class="flex items-baseline mb-6">
             <span class="text-3xl font-extrabold text-gray-900">49,800</span>
             <span class="text-xs text-gray-500 ml-2">円 / 月 (税込)</span>
           </div>
-          
+
           <div class="space-y-3 mb-8 flex-grow">
             <div class="flex items-start gap-3">
               <i class="fas fa-bolt text-yellow-500 mt-1"></i>
@@ -466,8 +1500,8 @@
             <div class="flex items-start gap-3">
               <i class="fas fa-users text-yellow-500 mt-1"></i>
               <div>
-                <span class="font-bold text-sm text-gray-800">週1回 戦略面談 (60分)</span>
-                <p class="text-[10px] text-gray-500">過去問分解・思考プロセス徹底解説</p>
+                <span class="font-bold text-sm text-gray-800">週1回 志望校別 戦略面談 (60分)</span>
+                <p class="text-[10px] text-gray-500">過去問分解・合格者の思考プロセス徹底解説</p>
               </div>
             </div>
             <div class="flex items-start gap-3">
@@ -480,12 +1514,19 @@
             <div class="flex items-start gap-3">
               <i class="fas fa-star text-yellow-500 mt-1"></i>
               <div>
-                <span class="font-bold text-sm text-gray-800">優先LINE対応</span>
+                <span class="font-bold text-sm text-gray-800">優先質問対応</span>
                 <p class="text-[10px] text-gray-500">12時間以内の返信確約</p>
               </div>
             </div>
+            <div class="flex items-start gap-3">
+              <i class="fas fa-people-roof text-yellow-500 mt-1"></i>
+              <div>
+                <span class="font-bold text-sm text-gray-800">月次レポート + 月1 保護者面談</span>
+                <p class="text-[10px] text-gray-500">保護者の方とも継続的に進捗共有</p>
+              </div>
+            </div>
           </div>
-          
+
           <button onclick="scrollToSection('contact')" class="w-full py-3 text-sm rounded-full font-bold bg-white text-gray-700 border-2 border-gray-200 hover:border-indigo-600 hover:text-indigo-600 transition-all">
             今すぐ申し込む
           </button>
@@ -493,11 +1534,351 @@
 
       </div>
       
-      <div class="mt-12 text-center">
-        <p class="text-sm text-gray-500">
+      <div class="mt-12 text-center max-w-3xl mx-auto">
+        <p class="text-sm text-gray-500 leading-relaxed">
           ※ 入会金は現在キャンペーン中で無料です。<br/>
-          ※ どのコースが合っているかわからない場合も、無料相談にてご提案させていただきます。
+          ※ 早割 (初月50%OFF) は無料相談から30日以内のお申込みが対象で、毎月先着5名様限定です。<br/>
+          ※ どのコースが合っているか分からない場合も、無料相談にてご提案させていただきます。<br/>
+          ※ 保護者面談は希望制で、追加費用はかかりません。
         </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guarantee / Bonus Section -->
+  <section id="guarantee" class="py-24 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 px-4">
+        <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">GUARANTEE &amp; BONUS</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">3つの安心：「失敗しない仕組み」をこちらが用意します</h2>
+        <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
+        <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
+          「合うかどうか分からない」を、こちら側のリスクで吸収します。<br/>
+          まずは無料で“合うか”を確かめてから、安心してご判断いただけます。
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="bg-gradient-to-br from-indigo-50 to-blue-50 p-8 rounded-3xl border border-indigo-100 shadow-md relative overflow-hidden">
+          <div class="absolute top-4 right-4 inline-block px-2 py-1 bg-indigo-600 text-white text-[10px] font-bold rounded-full tracking-wide">FREE</div>
+          <div class="w-14 h-14 rounded-2xl bg-indigo-600 text-white flex items-center justify-center mb-4 shadow-lg">
+            <i class="fas fa-comments text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-extrabold text-gray-900 mb-2">無料受験相談(60分)</h3>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            現状の学習状況・志望校・悩みをヒアリングし、<strong>合格までのボトルネック</strong>と最短ルートをその場でフィードバック。<br/>
+            「申し込まなくても得るものがあった」と言われる相談です。無理な勧誘は一切ありません。
+          </p>
+        </div>
+
+        <div class="bg-gradient-to-br from-emerald-50 to-green-50 p-8 rounded-3xl border border-emerald-100 shadow-md relative overflow-hidden">
+          <div class="absolute top-4 right-4 inline-block px-2 py-1 bg-emerald-600 text-white text-[10px] font-bold rounded-full tracking-wide">RISK 0</div>
+          <div class="w-14 h-14 rounded-2xl bg-emerald-600 text-white flex items-center justify-center mb-4 shadow-lg">
+            <i class="fas fa-shield-halved text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-extrabold text-gray-900 mb-2">初月 全額返金保証</h3>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            ご入会後 <strong>30日以内</strong> に「合わない」と感じた場合、初月のサービス料金を全額返金します。<br/>
+            「とりあえず試してから決められる」ので、最初の一歩を踏み出しやすい設計にしています。
+          </p>
+        </div>
+
+        <div class="bg-gradient-to-br from-amber-50 to-yellow-50 p-8 rounded-3xl border border-amber-100 shadow-md relative overflow-hidden">
+          <div class="absolute top-4 right-4 inline-block px-2 py-1 bg-amber-600 text-white text-[10px] font-bold rounded-full tracking-wide">BONUS</div>
+          <div class="w-14 h-14 rounded-2xl bg-amber-500 text-white flex items-center justify-center mb-4 shadow-lg">
+            <i class="fas fa-file-pdf text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-extrabold text-gray-900 mb-2">合格者の思考法 PDF 無料配布</h3>
+          <p class="text-sm text-gray-700 leading-relaxed">
+            無料相談お申込み時に、<strong>「医学部合格者がやっている1日の設計」</strong>をまとめたPDFを進呈。<br/>
+            スケジュール例・休み方ルール・つまずきポイント対処法まで、実例ベースで掲載しています。
+          </p>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <button onclick="scrollToSection('contact')" class="px-10 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:shadow-indigo-500/30 shadow-lg transition-all">
+          無料相談 + PDFを受け取る
+        </button>
+        <p class="text-xs text-gray-500 mt-3">※ PDFは無料相談お申し込み確認後にメールでお送りします。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flow Section -->
+  <section id="flow" class="py-24 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16 px-4">
+          <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">FLOW</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">受講までの流れ</h2>
+          <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
+          <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
+            無料相談からスタートし、現状診断→志望校別の合格設計→伴走開始まで、最短ルートでご案内します。
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-6">
+          <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-indigo-600 tracking-widest">STEP 1</span>
+              <span class="text-xs font-bold text-gray-400">1分</span>
+            </div>
+            <h3 class="text-lg font-extrabold text-gray-900 mt-3">無料相談を送信</h3>
+            <p class="text-sm text-gray-600 mt-2">
+              現状・志望校・悩みを簡単に入力。まずは「整理」から始めます。
+            </p>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-indigo-600 tracking-widest">STEP 2</span>
+              <span class="text-xs font-bold text-gray-400">15分</span>
+            </div>
+            <h3 class="text-lg font-extrabold text-gray-900 mt-3">現状を診断</h3>
+            <p class="text-sm text-gray-600 mt-2">
+              どこで詰まっているかを分解し、合格までのボトルネックを見える化します。
+            </p>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-indigo-600 tracking-widest">STEP 3</span>
+              <span class="text-xs font-bold text-gray-400">面談</span>
+            </div>
+            <h3 class="text-lg font-extrabold text-gray-900 mt-3">合格設計</h3>
+            <p class="text-sm text-gray-600 mt-2">
+              志望校別の教材・順番・週間計画を提案。「今日やるべきこと」まで落とし込みます。
+            </p>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-indigo-600 tracking-widest">STEP 4</span>
+              <span class="text-xs font-bold text-gray-400">開始</span>
+            </div>
+            <h3 class="text-lg font-extrabold text-gray-900 mt-3">伴走スタート</h3>
+            <p class="text-sm text-gray-600 mt-2">
+              面談＋日常的な質問サポートで習慣化。迷いを減らし、走り続ける仕組みを作ります。
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-12 text-center">
+          <button onclick="scrollToSection('contact')"
+            class="px-10 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:shadow-indigo-500/30 shadow-lg transition-all">
+            無料相談へ進む
+          </button>
+          <p class="text-xs text-gray-500 mt-4">
+            ※ 無理な勧誘は一切ありません。合う/合わないも正直にお伝えします。
+          </p>
+        </div>
+      </div>
+    </section>
+
+      <!-- FAQ Section -->
+<section id="faq" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <span class="font-bold tracking-widest uppercase text-sm text-indigo-600">FAQ</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-gray-900">よくある質問</h2>
+        <div class="w-20 h-1.5 mx-auto mt-6 rounded-full bg-indigo-600"></div>
+        <p class="text-gray-600 mt-6">
+          よくいただく不安・疑問に、先にお答えします。
+        </p>
+      </div>
+
+      <div id="faq-content" class="">
+        <div class="max-w-3xl mx-auto space-y-4">
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a1">
+              <span class="font-bold text-gray-900">Q. どのくらいの頻度で面談がありますか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a1" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              コースにより異なります。標準は<strong>週1回（30分）</strong>の面談です。ライトは月1回、徹底は週1回（60分）＋日次管理を想定しています。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a2">
+              <span class="font-bold text-gray-900">Q. 質問・相談はどんな内容でもいいですか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a2" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              はい。勉強の質問だけでなく、計画の立て方・休み方・モチベーション・親との関係まで、医学部受験で出てくる悩みは何でも歓迎です。<strong>「どう進めればいいか」</strong>を一緒に整理します。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a3">
+              <span class="font-bold text-gray-900">Q. 成績がかなり低いのですが、相談して大丈夫ですか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a3" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              大丈夫です。むしろ最初に必要なのは「才能」より<strong>戦略と習慣</strong>です。現状を見て、最短ルート（教材・順番・時間配分）から設計します。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a4">
+              <span class="font-bold text-gray-900">Q. 無料相談をしたら入会しないといけませんか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a4" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              いいえ。無理な勧誘は一切しません。合う/合わないも含めて正直にお伝えします。相談だけでもOKです。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a5">
+              <span class="font-bold text-gray-900">Q. 親だけで相談してもいいですか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a5" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              可能です。保護者の方のみの相談も歓迎です。現状整理・選択肢の比較・学習環境づくりなども一緒に考えます。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a6">
+              <span class="font-bold text-gray-900">Q. オンライン指導はどんなツールを使いますか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a6" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              主に <strong>Zoom / Google Meet</strong> を使います。どちらも無料で利用でき、初回はスタッフがセットアップをサポートします。録画して後から復習することもできます。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a7">
+              <span class="font-bold text-gray-900">Q. 自宅にPCがなく、スマホしかありませんが大丈夫ですか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a7" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              スマートフォン1台でも問題なく受講できます。手書きで解答を見せる際は、スマホのカメラやノートを画面に映していただく形でも対応可能です。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a8">
+              <span class="font-bold text-gray-900">Q. 講師との相性が合わなかった場合、変更できますか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a8" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              はい、いつでも無料で変更可能です。相性は学習効率に大きく影響するので、遠慮なくお申し付けください。複数の講師を試してから固定する形でもOKです。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a9">
+              <span class="font-bold text-gray-900">Q. 部活や学校の課題で忙しくても続けられますか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a9" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              むしろ <strong>「忙しい人向け」</strong> の設計です。今のあなたに無理のない時間量からスタートし、休息の質を上げながら徐々に勉強量を増やしていきます。部活を続けながら合格した先輩のスケジュールも共有可能です。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a10">
+              <span class="font-bold text-gray-900">Q. 既卒生・浪人生も対象ですか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a10" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              はい、既卒生・浪人生・再受験生すべて対象です。「同じ失敗を繰り返さない」ためのやり方の見直しに、特に強みがあります。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a11">
+              <span class="font-bold text-gray-900">Q. 推薦入試・総合型選抜の対策もできますか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a11" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              対応可能です。志望理由書・小論文・面接対策まで、合格者の実例を踏まえて指導します。地域枠など特殊な選抜方式についても個別にご相談ください。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a12">
+              <span class="font-bold text-gray-900">Q. 1ヶ月だけ試してみるのは可能ですか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a12" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              可能です。さらに <strong>「初月全額返金保証」</strong> をご用意しているので、合わないと感じた場合は30日以内に返金可能です。最初の一歩を踏み出しやすいよう、こちら側でリスクを吸収しています。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a13">
+              <span class="font-bold text-gray-900">Q. 早割キャンペーンの適用条件は？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a13" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              無料相談を受けたあと <strong>30日以内にご入会された方</strong> に、初月料金50%OFF + 入会金無料を適用します。全プランが対象ですが、毎月先着5名様限定とさせていただいています。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a14">
+              <span class="font-bold text-gray-900">Q. 保護者面談はどのように行われますか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a14" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              全プランで月次の学習レポートをメール送付します。スタンダード以上は希望制で月1回の保護者面談(オンライン)もご利用いただけます。プレミアムでは標準で月1の保護者面談を含みます。追加費用はかかりません。
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <button type="button" class="w-full px-6 py-5 flex items-center justify-between text-left" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-a15">
+              <span class="font-bold text-gray-900">Q. 解約はいつでもできますか？</span>
+              <span class="text-indigo-600 transition-transform">
+                <i class="fas fa-chevron-down transition-transform"></i>
+              </span>
+            </button>
+            <div id="faq-a15" class="px-6 pb-6 text-gray-600 leading-relaxed hidden">
+              はい、いつでも解約できます。長期契約の縛りはありません。<strong>更新は月単位</strong> なので、ご自身のペースで継続/解約を選択いただけます。
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 text-center">
+          <button onclick="scrollToSection('contact')"
+            class="px-10 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:shadow-indigo-500/30 shadow-lg transition-all">
+            無料相談へ進む
+          </button>
+          <p class="text-xs text-gray-500 mt-4">
+            ※ まずは相談だけでもOKです
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -513,17 +1894,62 @@
       <div class="max-w-3xl mx-auto text-center mb-12">
         <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
           まずは無料相談で<br />
-          最適な合格ルートを描きます。
+          あなただけの合格設計図を描きます。
         </h2>
         <p class="text-indigo-200 text-lg leading-relaxed">
-          「今の勉強法のままで、初見の問題に対応できるのか？」<br />
-          筑波大学医学類生が現状を丁寧に分析し、合格までの最短距離を一緒に設計します。<br />
+          「今のやり方のまま、本当に医学部に届くのか？」<br />
+          現役医学生が現状を丁寧に分析し、無理せず最短で合格するための設計図を一緒に作ります。<br />
           <span class="text-sm mt-2 block opacity-70">※ 無理な勧誘は一切ありません。</span>
         </p>
       </div>
 
-      <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <!-- Multi-channel CTA -->
+      <div class="max-w-5xl mx-auto mb-12 grid md:grid-cols-3 gap-4">
+        <a href="#inquiry-form-container" onclick="scrollToSection('contact')" class="group bg-white/95 hover:bg-white p-6 rounded-2xl shadow-lg transition-all cursor-pointer flex flex-col">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center"><i class="fas fa-envelope"></i></div>
+            <span class="text-xs font-bold text-indigo-600 tracking-widest">RECOMMENDED</span>
+          </div>
+          <p class="font-extrabold text-gray-900 text-lg mb-1">メールでじっくり相談</p>
+          <p class="text-xs text-gray-500 leading-relaxed flex-grow">下のフォームから現状と志望校をお送りください。24〜48時間以内にご返信します。</p>
+          <span class="mt-3 inline-flex items-center text-sm font-bold text-indigo-600 group-hover:underline">フォームへ <i class="fas fa-arrow-right ml-1 text-xs"></i></span>
+        </a>
+
+        <a href="#" id="line-cta" target="_blank" rel="noopener" class="group bg-[#06C755] hover:bg-[#05B04C] p-6 rounded-2xl shadow-lg transition-all cursor-pointer flex flex-col">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-white text-[#06C755] flex items-center justify-center"><i class="fab fa-line text-2xl"></i></div>
+            <span class="text-xs font-bold text-white/90 tracking-widest">CASUAL</span>
+          </div>
+          <p class="font-extrabold text-white text-lg mb-1">LINEで気軽に相談</p>
+          <p class="text-xs text-white/85 leading-relaxed flex-grow">「ちょっと聞きたい」レベルの質問もOK。公式LINEを友だち追加するだけで開始できます。</p>
+          <span class="mt-3 inline-flex items-center text-sm font-bold text-white group-hover:underline">公式LINEを追加 <i class="fas fa-arrow-right ml-1 text-xs"></i></span>
+        </a>
+
+        <a href="#" id="ig-cta" target="_blank" rel="noopener" class="group bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 hover:opacity-90 p-6 rounded-2xl shadow-lg transition-all cursor-pointer flex flex-col">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-white text-pink-500 flex items-center justify-center"><i class="fab fa-instagram text-2xl"></i></div>
+            <span class="text-xs font-bold text-white/90 tracking-widest">DAILY TIPS</span>
+          </div>
+          <p class="font-extrabold text-white text-lg mb-1">Instagramで毎日のヒント</p>
+          <p class="text-xs text-white/90 leading-relaxed flex-grow">合格者のスケジュール例・休み方・モチベ管理を投稿中。まずは情報収集だけでもOK。</p>
+          <span class="mt-3 inline-flex items-center text-sm font-bold text-white group-hover:underline">フォローする <i class="fas fa-arrow-right ml-1 text-xs"></i></span>
+        </a>
+      </div>
+
+      <div id="inquiry-form-container" class="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div class="p-8 md:p-10">
+          <p class="text-sm text-gray-500 mb-6 text-center">
+            以下のフォームにご相談内容をご記入ください。<br/>
+            内容を確認のうえ、担当者からご連絡いたします。
+          </p>
+
+          <div class="mb-6 rounded-xl bg-indigo-50 border border-indigo-100 p-4 text-sm text-gray-700">
+            <div class="font-bold text-indigo-900">返信目安：24〜48時間以内</div>
+            <div class="text-gray-600 mt-1">
+              ※内容によってはお時間をいただく場合があります。お急ぎの方は「相談内容」にその旨をご記入ください。
+            </div>
+          </div>
+
           <form id="inquiry-form" name="inquiry" method="POST" action="/thanks/index.html" data-netlify="true" data-netlify-honeypot="bot-field" class="space-y-6">
             <input type="hidden" name="form-name" value="inquiry" />
             <input type="text" name="bot-field" class="hidden" tabindex="-1" autocomplete="off" />
@@ -569,15 +1995,231 @@
     </div>
   </section>
 
+
+  <!-- Operator Section -->
+  <section id="operator" class="py-14 bg-white scroll-mt-24">
+    <div class="container mx-auto px-6">
+      <div class="max-w-3xl mx-auto">
+        <span class="font-bold tracking-widest uppercase text-xs text-indigo-600">ABOUT</span>
+        <h2 class="text-2xl md:text-3xl font-extrabold mt-2 text-gray-900">運営者情報</h2>
+
+        <dl class="mt-6 space-y-3 text-sm border-t border-gray-100 pt-4">
+          <div class="flex gap-4">
+            <dt class="w-28 text-gray-500 font-bold shrink-0">サービス名</dt>
+            <dd class="flex-1 text-gray-800">医学部受験アシスト</dd>
+          </div>
+          <div class="flex gap-4">
+            <dt class="w-28 text-gray-500 font-bold shrink-0">運営者</dt>
+            <dd class="flex-1 text-gray-800">鈴木海聖（筑波大学 医学群 医学類 在学中）</dd>
+          </div>
+          <div class="flex gap-4">
+            <dt class="w-28 text-gray-500 font-bold shrink-0">事業内容</dt>
+            <dd class="flex-1 text-gray-800">医学部志望者向け完全オンライン家庭教師・学習設計（講師は全員、志望校に通う現役医学生）</dd>
+          </div>
+          <div class="flex gap-4">
+            <dt class="w-28 text-gray-500 font-bold shrink-0">経歴</dt>
+            <dd class="flex-1 text-gray-800">地方公立高校から塾なし・独学で筑波大学医学類に現役合格</dd>
+          </div>
+          <div class="flex gap-4">
+            <dt class="w-28 text-gray-500 font-bold shrink-0">メール</dt>
+            <dd class="flex-1 text-gray-800">
+              <a href="mailto:kaippy318@gmail.com" class="text-indigo-600 font-bold hover:underline">
+                kaippy318@gmail.com
+              </a>
+            </dd>
+          </div>
+          <div class="flex gap-4">
+            <dt class="w-28 text-gray-500 font-bold shrink-0">返信目安</dt>
+            <dd class="flex-1 text-gray-800">24〜48時間以内（原則）</dd>
+          </div>
+        </dl>
+
+        <p class="mt-4 text-xs text-gray-500">
+          ※ 本ページは学習相談の窓口です。契約内容や詳細条件は、個別のご案内時に明確に提示します。
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Privacy Policy -->
+  <section id="privacy-policy" class="bg-gray-50 border-t border-gray-200 py-2 text-[10px]">
+    <div class="container mx-auto px-6 text-gray-500">
+      <div class="flex items-center justify-between gap-4">
+        <p class="text-[10px] font-medium tracking-wide text-gray-500">プライバシーポリシー</p>
+        <button
+          type="button"
+          class="text-[10px] text-gray-500 underline underline-offset-2 hover:text-gray-600"
+          aria-expanded="false"
+          aria-controls="privacy-content"
+          onclick="toggleFaq(this)">
+          開く
+        </button>
+      </div>
+      <div id="privacy-content" class="mt-1 hidden text-[10px] leading-relaxed text-gray-500">
+        <p class="text-[10px] font-medium text-gray-500">プライバシーポリシー（個人情報保護方針）</p>
+        <p class="mt-2">
+          医学部受験アシスト（以下「当サイト」または「当方」）は、当サイトを通じて取得する個人情報を、以下のとおり適切に取り扱います。
+        </p>
+
+        <ol class="mt-2 space-y-2 list-decimal pl-3">
+          <li>
+              <p class="font-medium text-gray-600">取得する情報</p>
+            <div class="mt-1 space-y-2">
+              <div>
+                <p class="font-medium text-gray-600">(1) お問い合わせ・申込フォームから取得する情報</p>
+                <ul class="mt-1 list-disc pl-3 space-y-1">
+                  <li>氏名</li>
+                  <li>メールアドレス</li>
+                  <li>学年</li>
+                  <li>相談内容（自由記述）</li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium text-gray-600">(2) サイト利用に伴い自動的に取得される情報</p>
+                <ul class="mt-1 list-disc pl-3 space-y-1">
+                  <li>アクセスログ（IPアドレス、ブラウザ情報、閲覧日時、参照元等）</li>
+                </ul>
+                <p class="mt-1 text-[9px] text-gray-400">※ サーバー/ホスティング事業者により自動的に記録される場合があります。</p>
+              </div>
+              <div>
+                <p class="font-medium text-gray-600">(3) スパム対策機能に伴い取得される可能性がある情報</p>
+                <ul class="mt-1 list-disc pl-3 space-y-1">
+                  <li>不正送信防止（CAPTCHA等）により、IPアドレスや端末情報等が取得・処理される場合があります。</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li>
+            <p class="font-medium text-gray-600">利用目的</p>
+            <ul class="mt-1 list-disc pl-3 space-y-1">
+              <li>お問い合わせへの回答、連絡、日程調整等の対応のため</li>
+              <li>サービス提供・運営上の必要な連絡のため</li>
+              <li>不正アクセス・スパム等の防止、セキュリティ確保のため</li>
+              <li>サービス改善、品質向上のため（個人を特定しない形での分析を含む）</li>
+            </ul>
+          </li>
+          <li>
+            <p class="font-medium text-gray-600">保存期間</p>
+            <p class="mt-1">
+              取得した個人情報を利用目的の達成に必要な期間保管し、不要となった場合は合理的な方法で削除または破棄します。
+              目安として、原則1年を超えて保管しないよう運用します（継続的な対応や法令上必要な場合を除く）。
+            </p>
+          </li>
+          <li>
+            <p class="font-medium text-gray-600">第三者提供</p>
+            <p class="mt-1">次の場合を除き、本人の同意なく第三者に提供しません。</p>
+            <ul class="mt-1 list-disc pl-3 space-y-1">
+              <li>法令に基づく場合</li>
+              <li>人の生命・身体・財産の保護のために必要で、本人の同意を得ることが困難な場合</li>
+              <li>公的機関から適法に開示を求められた場合</li>
+            </ul>
+          </li>
+          <li>
+            <p class="font-medium text-gray-600">委託・外部サービスの利用</p>
+            <p class="mt-1">運用上必要な範囲で、以下の外部サービスを利用する場合があります。</p>
+            <ul class="mt-1 list-disc pl-3 space-y-1">
+              <li>Netlify（フォーム機能等）：フォーム送信内容がNetlifyのシステム上で処理・保管される場合があります。</li>
+              <li>Google（予約機能等を利用する場合）：Googleカレンダー等で予約受付を行う際、予約情報がGoogleのシステム上で処理されます。</li>
+              <li>CAPTCHA等のスパム対策：不正送信防止のため第三者の仕組みを用いる場合があります。</li>
+            </ul>
+            <p class="mt-1 text-[9px] text-gray-400">※ 外部サービス提供者のサーバーが日本国外にある場合、情報が国外で処理される可能性があります。</p>
+          </li>
+          <li>
+            <p class="font-medium text-gray-600">安全管理措置</p>
+            <p class="mt-1">
+              個人情報への不正アクセス、漏えい、滅失、毀損等を防止するため、合理的な範囲で必要な安全管理措置を講じます。
+            </p>
+          </li>
+          <li>
+            <p class="font-medium text-gray-600">開示・訂正・削除等の請求</p>
+            <p class="mt-1">
+              本人からの開示、訂正、利用停止、削除等の希望があった場合、本人確認のうえ、法令に従い適切に対応します。
+              ご連絡は「1. 事業者情報」に記載の窓口までお願いします。
+            </p>
+          </li>
+          <li>
+            <p class="font-medium text-gray-600">未成年の利用</p>
+            <p class="mt-1">未成年の方は、必要に応じて保護者の同意を得たうえでお問い合わせ・申込を行ってください。</p>
+          </li>
+          <li>
+            <p class="font-medium text-gray-600">プライバシーポリシーの変更</p>
+            <p class="mt-1">内容は、法令の変更や運用改善等により予告なく変更される場合があります。変更後は当サイト上に掲載した時点から効力を生じます。</p>
+          </li>
+        </ol>
+
+        <p class="mt-3 text-[9px] text-gray-400">制定日：2025年12月10日</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Fixed CTA Bar -->
+  <div id="mobile-cta" class="fixed bottom-0 left-0 w-full z-50 md:hidden bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.1)] px-4 py-3 flex gap-2 translate-y-full transition-transform duration-300">
+    <button onclick="scrollToSection('contact')" class="flex-1 py-3 rounded-full font-bold text-sm bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+      無料相談はこちら
+    </button>
+  </div>
+
   <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800 text-sm">
+  <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800 text-sm pb-24 md:pb-12">
     <div class="container mx-auto px-6 text-center">
-      <p class="mb-4 text-lg font-bold text-white tracking-widest">Think Do!</p>
-      <p>&copy; 2024 Study Management Think Do! All rights reserved.</p>
+      <p class="mb-4 text-lg font-bold text-white tracking-widest">医学部受験アシスト</p>
+      <div class="flex items-center justify-center gap-4 mb-6">
+        <a href="#" id="line-cta-footer" target="_blank" rel="noopener" aria-label="公式LINE" class="w-11 h-11 rounded-full bg-[#06C755] text-white flex items-center justify-center hover:scale-110 transition-transform">
+          <i class="fab fa-line text-xl"></i>
+        </a>
+        <a href="#" id="ig-cta-footer" target="_blank" rel="noopener" aria-label="Instagram公式" class="w-11 h-11 rounded-full bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 text-white flex items-center justify-center hover:scale-110 transition-transform">
+          <i class="fab fa-instagram text-xl"></i>
+        </a>
+        <a href="mailto:kaippy318@gmail.com" aria-label="メール" class="w-11 h-11 rounded-full bg-gray-700 text-white flex items-center justify-center hover:scale-110 transition-transform">
+          <i class="fas fa-envelope text-lg"></i>
+        </a>
+      </div>
+      <p>&copy; 2025 医学部受験アシスト. All rights reserved.</p>
     </div>
   </footer>
 
   <script>
+    function toggleFaq(button) {
+      const contentId = button.getAttribute('aria-controls');
+      const content = document.getElementById(contentId);
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      if (content) {
+        content.classList.toggle('hidden', isExpanded);
+      }
+      button.setAttribute('aria-expanded', String(!isExpanded));
+      const icon = button.querySelector('.fa-chevron-down');
+      if (icon) {
+        icon.classList.toggle('rotate-180', !isExpanded);
+      }
+    }
+
+    function toggleFaqSection(button) {
+      const contentId = button.getAttribute('aria-controls');
+      const content = document.getElementById(contentId);
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      if (content) {
+        content.classList.toggle('hidden', isExpanded);
+      }
+      button.setAttribute('aria-expanded', String(!isExpanded));
+      const icon = button.querySelector('.fa-chevron-down');
+      if (icon) {
+        icon.classList.toggle('rotate-180', !isExpanded);
+      }
+    }
+
+    function showInquiryForm() {
+      const container = document.getElementById('inquiry-form-container');
+      if (container && container.classList.contains('hidden')) {
+        container.classList.remove('hidden');
+        const trigger = event?.currentTarget;
+        if (trigger) {
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      }
+      container?.scrollIntoView({ behavior: 'smooth' });
+    }
+
     // Navigation scroll effect
     let scrolled = false;
     window.addEventListener('scroll', () => {
@@ -643,6 +2285,25 @@
       if (menuOpen) toggleMenu();
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     }
+
+    // Mobile fixed CTA bar - show after scrolling past hero
+    (function() {
+      const mobileCta = document.getElementById('mobile-cta');
+      if (!mobileCta) return;
+      let ctaVisible = false;
+      window.addEventListener('scroll', function() {
+        const show = window.scrollY > window.innerHeight * 0.5;
+        if (show && !ctaVisible) {
+          ctaVisible = true;
+          mobileCta.classList.remove('translate-y-full');
+          mobileCta.classList.add('translate-y-0');
+        } else if (!show && ctaVisible) {
+          ctaVisible = false;
+          mobileCta.classList.add('translate-y-full');
+          mobileCta.classList.remove('translate-y-0');
+        }
+      });
+    })();
 
   </script>
 </body>
